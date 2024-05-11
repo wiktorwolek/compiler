@@ -83,6 +83,11 @@ class ExprLexer(Lexer):
     def WS_action(self, localctx:RuleContext , actionIndex:int):
         if actionIndex == 0:
              skip(); 
+
+
+def skip():
+    # pass
+    print("Hello World")
      
 
 
