@@ -26,6 +26,15 @@ class ExprListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ExprParser#assign.
+    def enterAssign(self, ctx:ExprParser.AssignContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#assign.
+    def exitAssign(self, ctx:ExprParser.AssignContext):
+        pass
+
+
     # Enter a parse tree produced by ExprParser#write.
     def enterWrite(self, ctx:ExprParser.WriteContext):
         pass
@@ -50,6 +59,15 @@ class ExprListener(ParseTreeListener):
 
     # Exit a parse tree produced by ExprParser#expr.
     def exitExpr(self, ctx:ExprParser.ExprContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#add.
+    def enterAdd(self, ctx:ExprParser.AddContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#add.
+    def exitAdd(self, ctx:ExprParser.AddContext):
         pass
 
 

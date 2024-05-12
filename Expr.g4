@@ -1,14 +1,18 @@
 grammar Expr;
 
-prog: ( stat? NEWLINE )*;
+prog: ( stat? NEWLINE )* '<EOF>';
 
-stat:	write | ID '=' expr | read;
+stat:	write | assign | read;
+
+assign: ID '=' expr;
 
 write: WRITE ID;
 
 read: READ ID;
 
-expr: value ADD expr | value;
+expr:  add | value;
+
+add: value ADD expr;
 
 value: ID | INT;	
 
@@ -24,4 +28,4 @@ ADD: '+';
 
 NEWLINE:	'\r'? '\n';
 
-WS:   (' '|'\t')+ { skip(); };
+WS:   (' '|'\t')+ -> skip;

@@ -3,7 +3,7 @@ from antlr4 import *
 
 from ExprLexer import ExprLexer
 from ExprParser import ExprParser
-from ExprListener import ExprListener
+from LLVMActions import LLVMActions
 
 def main(args):
     # Step 1: Load input source into the stream object
@@ -21,7 +21,7 @@ def main(args):
     # Step 5: Create parse tree
     tree = parser.prog()
 
-
-    print(ExprListener(),tree)
+    walker = ParseTreeWalker()
+    walker.walk(LLVMActions(), tree)
 if __name__ == '__main__':
     main(sys.argv)

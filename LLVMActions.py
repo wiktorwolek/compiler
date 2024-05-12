@@ -17,7 +17,10 @@ class LLVMActions(ExprListener):
         LLVMGenerator.assign(ID, self.stack.pop())
 
     def exitProg(self, ctx:ExprParser.ProgContext): 
-        print(LLVMGenerator.generate())
+        code = LLVMGenerator.generate()
+        f = open("prog.lli","w")
+        f.write(code)
+        print(code)
 
     def exitValue(self, ctx:ExprParser.ValueContext): 
         if ctx.ID() is not None:
@@ -33,9 +36,6 @@ class LLVMActions(ExprListener):
     def exitAdd(self, ctx:ExprParser.AddContext): 
         LLVMGenerator.add(self.stack.pop(), self.stack.pop())
         self.stack.append("%" + str(LLVMGenerator.reg - 1))
-
-    def exitSingle(self, ctx:ExprParser.SingleContext): 
-        pass
 
     def exitWrite(self, ctx:ExprParser.WriteContext):
         ID = ctx.ID().getText()
