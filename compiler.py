@@ -3,11 +3,9 @@ from antlr4 import *
 
 from ExprLexer import ExprLexer
 from ExprParser import ExprParser
-from LLVMActions import LLVMActions
-
+from ExprListener import ExprListener
 
 def main(args):
-    print(":(")
     # Step 1: Load input source into the stream object
     stream = FileStream(args[1])
 
@@ -24,8 +22,6 @@ def main(args):
     tree = parser.prog()
 
 
-    # Step 7: Create a walker to traverse the parse tree and callback our listener
-    walker = ParseTreeWalker()
-    walker.walk(LLVMActions(), tree)
+    print(ExprListener(),tree)
 if __name__ == '__main__':
     main(sys.argv)

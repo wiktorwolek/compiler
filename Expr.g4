@@ -1,38 +1,27 @@
 grammar Expr;
 
-prog: ( stat? NEWLINE )* 
-    ;
+prog: ( stat? NEWLINE )*;
 
-stat:	WRITE ID		
-	| ID '=' expr		
-	| READ ID   		
-   ;
+stat:	write | ID '=' expr | read;
 
-expr: value ADD expr		
-	| value			
-   ;
+write: WRITE ID;
 
-value: ID
-       | INT
-   ;	
+read: READ ID;
 
-WRITE:	'write' 
-   ;
+expr: value ADD expr | value;
 
-READ:	'read' 
-   ;
+value: ID | INT;	
+
+WRITE: 'write';
+
+READ:	'read';
    
-ID:   ('a'..'z'|'A'..'Z')+
-   ;
+ID:  ('a'..'z'|'A'..'Z')+;
 
-INT:   '0'..'9'+
-    ;
+INT: '0'..'9'+;
 
-ADD: '+'
-    ;
+ADD: '+';
 
-NEWLINE:	'\r'? '\n'
-    ;
+NEWLINE:	'\r'? '\n';
 
-WS:   (' '|'\t')+ { skip(); }
-    ;
+WS:   (' '|'\t')+ { skip(); };

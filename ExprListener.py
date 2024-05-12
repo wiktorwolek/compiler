@@ -26,6 +26,24 @@ class ExprListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ExprParser#write.
+    def enterWrite(self, ctx:ExprParser.WriteContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#write.
+    def exitWrite(self, ctx:ExprParser.WriteContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#read.
+    def enterRead(self, ctx:ExprParser.ReadContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#read.
+    def exitRead(self, ctx:ExprParser.ReadContext):
+        pass
+
+
     # Enter a parse tree produced by ExprParser#expr.
     def enterExpr(self, ctx:ExprParser.ExprContext):
         pass

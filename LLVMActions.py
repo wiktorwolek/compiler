@@ -54,3 +54,5 @@ class LLVMActions(ExprListener):
     def error(self, line, msg):
         print("Error, line " + str(line) + ", " + msg)
         exit(1)
+    def skip(self):
+        print("skip")
