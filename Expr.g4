@@ -22,7 +22,7 @@ expression2:
 	| '(' expression ')'	# par
 	| ID					# id;
 
-add: expression1 ADDOP expression2;
+add: expression1 ADDOP expression;
 
 multiply: expression2 MULOP expression2;
 

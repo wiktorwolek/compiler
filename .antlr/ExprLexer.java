@@ -1,4 +1,4 @@
-// Generated from /home/ms/Dokumenty/Inf_Stosowana/SEM 1/JFIK/Projekt/compiler/Expr.g4 by ANTLR 4.13.1
+// Generated from c:/Users/wolek/source/repos/compiler/Expr.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

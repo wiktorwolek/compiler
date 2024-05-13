@@ -32,7 +32,7 @@ def serializedATN():
         63,5,8,0,0,63,70,3,14,7,0,64,65,5,3,0,0,65,66,3,10,5,0,66,67,5,4,
         0,0,67,70,1,0,0,0,68,70,5,9,0,0,69,58,1,0,0,0,69,59,1,0,0,0,69,60,
         1,0,0,0,69,62,1,0,0,0,69,64,1,0,0,0,69,68,1,0,0,0,70,15,1,0,0,0,
-        71,72,3,12,6,0,72,73,5,12,0,0,73,74,3,14,7,0,74,17,1,0,0,0,75,76,
+        71,72,3,12,6,0,72,73,5,12,0,0,73,74,3,10,5,0,74,17,1,0,0,0,75,76,
         3,14,7,0,76,77,5,13,0,0,77,78,3,14,7,0,78,19,1,0,0,0,79,80,3,14,
         7,0,80,81,5,14,0,0,81,82,3,14,7,0,82,21,1,0,0,0,83,84,7,0,0,0,84,
         23,1,0,0,0,6,25,30,38,52,56,69
@@ -709,8 +709,8 @@ class ExprParser ( Parser ):
         def ADDOP(self):
             return self.getToken(ExprParser.ADDOP, 0)
 
-        def expression2(self):
-            return self.getTypedRuleContext(ExprParser.Expression2Context,0)
+        def expression(self):
+            return self.getTypedRuleContext(ExprParser.ExpressionContext,0)
 
 
         def getRuleIndex(self):
@@ -738,7 +738,7 @@ class ExprParser ( Parser ):
             self.state = 72
             self.match(ExprParser.ADDOP)
             self.state = 73
-            self.expression2()
+            self.expression()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)

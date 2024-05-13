@@ -4,10 +4,11 @@ from antlr4 import *
 from ExprLexer import ExprLexer
 from ExprParser import ExprParser
 from LLVMActions import LLVMActions
+from LLVMGenerator import LLVMGenerator
 
 def main(args):
     # Step 1: Load input source into the stream object
-    stream = FileStream(args[1])
+    stream = FileStream("test.x")
 
     # Step 2: Create an instance of AssignmentStLexer
     lexer = ExprLexer(stream)
@@ -20,8 +21,12 @@ def main(args):
 
     # Step 5: Create parse tree
     tree = parser.prog()
-
+    print(tree.toStringTree(recog=parser))
     walker = ParseTreeWalker()
-    walker.walk(LLVMActions(), tree)
+    try:
+        walker.walk(LLVMActions(), tree)
+    except:
+         print(LLVMGenerator().generate())
+         print(":(")
 if __name__ == '__main__':
     main(sys.argv)

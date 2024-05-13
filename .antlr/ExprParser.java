@@ -1,4 +1,4 @@
-// Generated from /home/ms/Dokumenty/Inf_Stosowana/SEM 1/JFIK/Projekt/compiler/Expr.g4 by ANTLR 4.13.1
+// Generated from c:/Users/wolek/source/repos/compiler/Expr.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -552,8 +552,8 @@ public class ExprParser extends Parser {
 			return getRuleContext(Expression1Context.class,0);
 		}
 		public TerminalNode ADDOP() { return getToken(ExprParser.ADDOP, 0); }
-		public Expression2Context expression2() {
-			return getRuleContext(Expression2Context.class,0);
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
 		}
 		public AddContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -572,7 +572,7 @@ public class ExprParser extends Parser {
 			setState(72);
 			match(ADDOP);
 			setState(73);
-			expression2();
+			expression();
 			}
 		}
 		catch (RecognitionException re) {
@@ -749,12 +749,12 @@ public class ExprParser extends Parser {
 		"\u0000\u0000\u0000DF\u0005\t\u0000\u0000E:\u0001\u0000\u0000\u0000E;\u0001"+
 		"\u0000\u0000\u0000E<\u0001\u0000\u0000\u0000E>\u0001\u0000\u0000\u0000"+
 		"E@\u0001\u0000\u0000\u0000ED\u0001\u0000\u0000\u0000F\u000f\u0001\u0000"+
-		"\u0000\u0000GH\u0003\f\u0006\u0000HI\u0005\f\u0000\u0000IJ\u0003\u000e"+
-		"\u0007\u0000J\u0011\u0001\u0000\u0000\u0000KL\u0003\u000e\u0007\u0000"+
-		"LM\u0005\r\u0000\u0000MN\u0003\u000e\u0007\u0000N\u0013\u0001\u0000\u0000"+
-		"\u0000OP\u0003\u000e\u0007\u0000PQ\u0005\u000e\u0000\u0000QR\u0003\u000e"+
-		"\u0007\u0000R\u0015\u0001\u0000\u0000\u0000ST\u0007\u0000\u0000\u0000"+
-		"T\u0017\u0001\u0000\u0000\u0000\u0006\u0019\u001e&48E";
+		"\u0000\u0000GH\u0003\f\u0006\u0000HI\u0005\f\u0000\u0000IJ\u0003\n\u0005"+
+		"\u0000J\u0011\u0001\u0000\u0000\u0000KL\u0003\u000e\u0007\u0000LM\u0005"+
+		"\r\u0000\u0000MN\u0003\u000e\u0007\u0000N\u0013\u0001\u0000\u0000\u0000"+
+		"OP\u0003\u000e\u0007\u0000PQ\u0005\u000e\u0000\u0000QR\u0003\u000e\u0007"+
+		"\u0000R\u0015\u0001\u0000\u0000\u0000ST\u0007\u0000\u0000\u0000T\u0017"+
+		"\u0001\u0000\u0000\u0000\u0006\u0019\u001e&48E";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
