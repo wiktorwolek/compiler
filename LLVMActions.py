@@ -18,7 +18,7 @@ class LLVMActions(ExprListener):
 
     def exitProg(self, ctx:ExprParser.ProgContext): 
         code = LLVMGenerator.generate()
-        f = open("prog.lli","w")
+        f = open("prog.ll","w")
         f.write(code)
         print(code)
 
