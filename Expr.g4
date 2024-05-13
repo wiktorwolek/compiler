@@ -1,31 +1,37 @@
 grammar Expr;
 
-prog: ( stat? NEWLINE )* '<EOF>';
+prog: ( stat? NEWLINE)* '<EOF>';
 
-stat:	write | assign | read;
+stat: write | assign | read;
 
-assign: ID '=' expr;
+assign: ID '=' expression;
+
+expression: expression1 | add;
+
+expression1: expression2 | multiply;
 
 write: WRITE ID;
 
 read: READ ID;
 
-expr:  add | value;
+add: expression1 ADD expression1;
 
-add: value ADD expr;
+multiply: expression2 MUL expression2;
 
-value: ID | INT;	
+expression2: ID | INT | '(' expression ')';
 
 WRITE: 'write';
 
-READ:	'read';
-   
-ID:  ('a'..'z'|'A'..'Z')+;
+READ: 'read';
 
-INT: '0'..'9'+;
+ID: ('a' ..'z' | 'A' ..'Z')+;
+
+INT: '0' ..'9'+;
 
 ADD: '+';
 
-NEWLINE:	'\r'? '\n';
+MUL: '*';
 
-WS:   (' '|'\t')+ -> skip;
+NEWLINE: '\r'? '\n';
+
+WS: (' ' | '\t')+ -> skip;

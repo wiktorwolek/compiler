@@ -10,21 +10,27 @@ else:
 
 def serializedATN():
     return [
-        4,1,8,51,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,
-        2,7,7,7,1,0,3,0,18,8,0,1,0,5,0,21,8,0,10,0,12,0,24,9,0,1,1,1,1,1,
-        1,3,1,29,8,1,1,2,1,2,1,2,1,2,1,3,1,3,1,3,1,4,1,4,1,4,1,5,1,5,3,5,
-        43,8,5,1,6,1,6,1,6,1,6,1,7,1,7,1,7,0,0,8,0,2,4,6,8,10,12,14,0,1,
-        1,0,4,5,47,0,22,1,0,0,0,2,28,1,0,0,0,4,30,1,0,0,0,6,34,1,0,0,0,8,
-        37,1,0,0,0,10,42,1,0,0,0,12,44,1,0,0,0,14,48,1,0,0,0,16,18,3,2,1,
-        0,17,16,1,0,0,0,17,18,1,0,0,0,18,19,1,0,0,0,19,21,5,7,0,0,20,17,
-        1,0,0,0,21,24,1,0,0,0,22,20,1,0,0,0,22,23,1,0,0,0,23,1,1,0,0,0,24,
-        22,1,0,0,0,25,29,3,6,3,0,26,29,3,4,2,0,27,29,3,8,4,0,28,25,1,0,0,
-        0,28,26,1,0,0,0,28,27,1,0,0,0,29,3,1,0,0,0,30,31,5,4,0,0,31,32,5,
-        1,0,0,32,33,3,10,5,0,33,5,1,0,0,0,34,35,5,2,0,0,35,36,5,4,0,0,36,
-        7,1,0,0,0,37,38,5,3,0,0,38,39,5,4,0,0,39,9,1,0,0,0,40,43,3,12,6,
-        0,41,43,3,14,7,0,42,40,1,0,0,0,42,41,1,0,0,0,43,11,1,0,0,0,44,45,
-        3,14,7,0,45,46,5,6,0,0,46,47,3,10,5,0,47,13,1,0,0,0,48,49,7,0,0,
-        0,49,15,1,0,0,0,4,17,22,28,42
+        4,1,12,71,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        6,2,7,7,7,2,8,7,8,2,9,7,9,1,0,3,0,22,8,0,1,0,5,0,25,8,0,10,0,12,
+        0,28,9,0,1,0,1,0,1,1,1,1,1,1,3,1,35,8,1,1,2,1,2,1,2,1,2,1,3,1,3,
+        3,3,43,8,3,1,4,1,4,3,4,47,8,4,1,5,1,5,1,5,1,6,1,6,1,6,1,7,1,7,1,
+        7,1,7,1,8,1,8,1,8,1,8,1,9,1,9,1,9,1,9,1,9,1,9,3,9,69,8,9,1,9,0,0,
+        10,0,2,4,6,8,10,12,14,16,18,0,0,68,0,26,1,0,0,0,2,34,1,0,0,0,4,36,
+        1,0,0,0,6,42,1,0,0,0,8,46,1,0,0,0,10,48,1,0,0,0,12,51,1,0,0,0,14,
+        54,1,0,0,0,16,58,1,0,0,0,18,68,1,0,0,0,20,22,3,2,1,0,21,20,1,0,0,
+        0,21,22,1,0,0,0,22,23,1,0,0,0,23,25,5,11,0,0,24,21,1,0,0,0,25,28,
+        1,0,0,0,26,24,1,0,0,0,26,27,1,0,0,0,27,29,1,0,0,0,28,26,1,0,0,0,
+        29,30,5,1,0,0,30,1,1,0,0,0,31,35,3,10,5,0,32,35,3,4,2,0,33,35,3,
+        12,6,0,34,31,1,0,0,0,34,32,1,0,0,0,34,33,1,0,0,0,35,3,1,0,0,0,36,
+        37,5,7,0,0,37,38,5,2,0,0,38,39,3,6,3,0,39,5,1,0,0,0,40,43,3,8,4,
+        0,41,43,3,14,7,0,42,40,1,0,0,0,42,41,1,0,0,0,43,7,1,0,0,0,44,47,
+        3,18,9,0,45,47,3,16,8,0,46,44,1,0,0,0,46,45,1,0,0,0,47,9,1,0,0,0,
+        48,49,5,5,0,0,49,50,5,7,0,0,50,11,1,0,0,0,51,52,5,6,0,0,52,53,5,
+        7,0,0,53,13,1,0,0,0,54,55,3,8,4,0,55,56,5,9,0,0,56,57,3,8,4,0,57,
+        15,1,0,0,0,58,59,3,18,9,0,59,60,5,10,0,0,60,61,3,18,9,0,61,17,1,
+        0,0,0,62,69,5,7,0,0,63,69,5,8,0,0,64,65,5,3,0,0,65,66,3,6,3,0,66,
+        67,5,4,0,0,67,69,1,0,0,0,68,62,1,0,0,0,68,63,1,0,0,0,68,64,1,0,0,
+        0,69,19,1,0,0,0,6,21,26,34,42,46,68
     ]
 
 class ExprParser ( Parser ):
@@ -37,33 +43,40 @@ class ExprParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "'='", "'write'", "'read'", "<INVALID>", 
-                     "<INVALID>", "'+'" ]
+    literalNames = [ "<INVALID>", "'<EOF>'", "'='", "'('", "')'", "'write'", 
+                     "'read'", "<INVALID>", "<INVALID>", "'+'", "'*'" ]
 
-    symbolicNames = [ "<INVALID>", "<INVALID>", "WRITE", "READ", "ID", "INT", 
-                      "ADD", "NEWLINE", "WS" ]
+    symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                      "<INVALID>", "WRITE", "READ", "ID", "INT", "ADD", 
+                      "MUL", "NEWLINE", "WS" ]
 
     RULE_prog = 0
     RULE_stat = 1
     RULE_assign = 2
-    RULE_write = 3
-    RULE_read = 4
-    RULE_expr = 5
-    RULE_add = 6
-    RULE_value = 7
+    RULE_expression = 3
+    RULE_expression1 = 4
+    RULE_write = 5
+    RULE_read = 6
+    RULE_add = 7
+    RULE_multiply = 8
+    RULE_expression2 = 9
 
-    ruleNames =  [ "prog", "stat", "assign", "write", "read", "expr", "add", 
-                   "value" ]
+    ruleNames =  [ "prog", "stat", "assign", "expression", "expression1", 
+                   "write", "read", "add", "multiply", "expression2" ]
 
     EOF = Token.EOF
     T__0=1
-    WRITE=2
-    READ=3
-    ID=4
-    INT=5
-    ADD=6
-    NEWLINE=7
-    WS=8
+    T__1=2
+    T__2=3
+    T__3=4
+    WRITE=5
+    READ=6
+    ID=7
+    INT=8
+    ADD=9
+    MUL=10
+    NEWLINE=11
+    WS=12
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -115,24 +128,26 @@ class ExprParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 22
+            self.state = 26
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 156) != 0):
-                self.state = 17
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 2272) != 0):
+                self.state = 21
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 28) != 0):
-                    self.state = 16
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 224) != 0):
+                    self.state = 20
                     self.stat()
 
 
-                self.state = 19
+                self.state = 23
                 self.match(ExprParser.NEWLINE)
-                self.state = 24
+                self.state = 28
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
+            self.state = 29
+            self.match(ExprParser.T__0)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -180,22 +195,22 @@ class ExprParser ( Parser ):
         localctx = ExprParser.StatContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_stat)
         try:
-            self.state = 28
+            self.state = 34
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [2]:
+            if token in [5]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 25
+                self.state = 31
                 self.write()
                 pass
-            elif token in [4]:
+            elif token in [7]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 26
+                self.state = 32
                 self.assign()
                 pass
-            elif token in [3]:
+            elif token in [6]:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 27
+                self.state = 33
                 self.read()
                 pass
             else:
@@ -220,8 +235,8 @@ class ExprParser ( Parser ):
         def ID(self):
             return self.getToken(ExprParser.ID, 0)
 
-        def expr(self):
-            return self.getTypedRuleContext(ExprParser.ExprContext,0)
+        def expression(self):
+            return self.getTypedRuleContext(ExprParser.ExpressionContext,0)
 
 
         def getRuleIndex(self):
@@ -244,12 +259,130 @@ class ExprParser ( Parser ):
         self.enterRule(localctx, 4, self.RULE_assign)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 30
+            self.state = 36
             self.match(ExprParser.ID)
-            self.state = 31
-            self.match(ExprParser.T__0)
-            self.state = 32
-            self.expr()
+            self.state = 37
+            self.match(ExprParser.T__1)
+            self.state = 38
+            self.expression()
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class ExpressionContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def expression1(self):
+            return self.getTypedRuleContext(ExprParser.Expression1Context,0)
+
+
+        def add(self):
+            return self.getTypedRuleContext(ExprParser.AddContext,0)
+
+
+        def getRuleIndex(self):
+            return ExprParser.RULE_expression
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterExpression" ):
+                listener.enterExpression(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitExpression" ):
+                listener.exitExpression(self)
+
+
+
+
+    def expression(self):
+
+        localctx = ExprParser.ExpressionContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 6, self.RULE_expression)
+        try:
+            self.state = 42
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,3,self._ctx)
+            if la_ == 1:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 40
+                self.expression1()
+                pass
+
+            elif la_ == 2:
+                self.enterOuterAlt(localctx, 2)
+                self.state = 41
+                self.add()
+                pass
+
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class Expression1Context(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def expression2(self):
+            return self.getTypedRuleContext(ExprParser.Expression2Context,0)
+
+
+        def multiply(self):
+            return self.getTypedRuleContext(ExprParser.MultiplyContext,0)
+
+
+        def getRuleIndex(self):
+            return ExprParser.RULE_expression1
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterExpression1" ):
+                listener.enterExpression1(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitExpression1" ):
+                listener.exitExpression1(self)
+
+
+
+
+    def expression1(self):
+
+        localctx = ExprParser.Expression1Context(self, self._ctx, self.state)
+        self.enterRule(localctx, 8, self.RULE_expression1)
+        try:
+            self.state = 46
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
+            if la_ == 1:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 44
+                self.expression2()
+                pass
+
+            elif la_ == 2:
+                self.enterOuterAlt(localctx, 2)
+                self.state = 45
+                self.multiply()
+                pass
+
+
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -289,12 +422,12 @@ class ExprParser ( Parser ):
     def write(self):
 
         localctx = ExprParser.WriteContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 6, self.RULE_write)
+        self.enterRule(localctx, 10, self.RULE_write)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 34
+            self.state = 48
             self.match(ExprParser.WRITE)
-            self.state = 35
+            self.state = 49
             self.match(ExprParser.ID)
         except RecognitionException as re:
             localctx.exception = re
@@ -335,72 +468,13 @@ class ExprParser ( Parser ):
     def read(self):
 
         localctx = ExprParser.ReadContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 8, self.RULE_read)
+        self.enterRule(localctx, 12, self.RULE_read)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 37
+            self.state = 51
             self.match(ExprParser.READ)
-            self.state = 38
+            self.state = 52
             self.match(ExprParser.ID)
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class ExprContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def add(self):
-            return self.getTypedRuleContext(ExprParser.AddContext,0)
-
-
-        def value(self):
-            return self.getTypedRuleContext(ExprParser.ValueContext,0)
-
-
-        def getRuleIndex(self):
-            return ExprParser.RULE_expr
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExpr" ):
-                listener.enterExpr(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExpr" ):
-                listener.exitExpr(self)
-
-
-
-
-    def expr(self):
-
-        localctx = ExprParser.ExprContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 10, self.RULE_expr)
-        try:
-            self.state = 42
-            self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,3,self._ctx)
-            if la_ == 1:
-                self.enterOuterAlt(localctx, 1)
-                self.state = 40
-                self.add()
-                pass
-
-            elif la_ == 2:
-                self.enterOuterAlt(localctx, 2)
-                self.state = 41
-                self.value()
-                pass
-
-
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -417,16 +491,15 @@ class ExprParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def value(self):
-            return self.getTypedRuleContext(ExprParser.ValueContext,0)
+        def expression1(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(ExprParser.Expression1Context)
+            else:
+                return self.getTypedRuleContext(ExprParser.Expression1Context,i)
 
 
         def ADD(self):
             return self.getToken(ExprParser.ADD, 0)
-
-        def expr(self):
-            return self.getTypedRuleContext(ExprParser.ExprContext,0)
-
 
         def getRuleIndex(self):
             return ExprParser.RULE_add
@@ -445,15 +518,15 @@ class ExprParser ( Parser ):
     def add(self):
 
         localctx = ExprParser.AddContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 12, self.RULE_add)
+        self.enterRule(localctx, 14, self.RULE_add)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 44
-            self.value()
-            self.state = 45
+            self.state = 54
+            self.expression1()
+            self.state = 55
             self.match(ExprParser.ADD)
-            self.state = 46
-            self.expr()
+            self.state = 56
+            self.expression1()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -463,7 +536,59 @@ class ExprParser ( Parser ):
         return localctx
 
 
-    class ValueContext(ParserRuleContext):
+    class MultiplyContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def expression2(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(ExprParser.Expression2Context)
+            else:
+                return self.getTypedRuleContext(ExprParser.Expression2Context,i)
+
+
+        def MUL(self):
+            return self.getToken(ExprParser.MUL, 0)
+
+        def getRuleIndex(self):
+            return ExprParser.RULE_multiply
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterMultiply" ):
+                listener.enterMultiply(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitMultiply" ):
+                listener.exitMultiply(self)
+
+
+
+
+    def multiply(self):
+
+        localctx = ExprParser.MultiplyContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 16, self.RULE_multiply)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 58
+            self.expression2()
+            self.state = 59
+            self.match(ExprParser.MUL)
+            self.state = 60
+            self.expression2()
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class Expression2Context(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -476,34 +601,54 @@ class ExprParser ( Parser ):
         def INT(self):
             return self.getToken(ExprParser.INT, 0)
 
+        def expression(self):
+            return self.getTypedRuleContext(ExprParser.ExpressionContext,0)
+
+
         def getRuleIndex(self):
-            return ExprParser.RULE_value
+            return ExprParser.RULE_expression2
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterValue" ):
-                listener.enterValue(self)
+            if hasattr( listener, "enterExpression2" ):
+                listener.enterExpression2(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitValue" ):
-                listener.exitValue(self)
+            if hasattr( listener, "exitExpression2" ):
+                listener.exitExpression2(self)
 
 
 
 
-    def value(self):
+    def expression2(self):
 
-        localctx = ExprParser.ValueContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 14, self.RULE_value)
-        self._la = 0 # Token type
+        localctx = ExprParser.Expression2Context(self, self._ctx, self.state)
+        self.enterRule(localctx, 18, self.RULE_expression2)
         try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 48
-            _la = self._input.LA(1)
-            if not(_la==4 or _la==5):
-                self._errHandler.recoverInline(self)
+            self.state = 68
+            self._errHandler.sync(self)
+            token = self._input.LA(1)
+            if token in [7]:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 62
+                self.match(ExprParser.ID)
+                pass
+            elif token in [8]:
+                self.enterOuterAlt(localctx, 2)
+                self.state = 63
+                self.match(ExprParser.INT)
+                pass
+            elif token in [3]:
+                self.enterOuterAlt(localctx, 3)
+                self.state = 64
+                self.match(ExprParser.T__2)
+                self.state = 65
+                self.expression()
+                self.state = 66
+                self.match(ExprParser.T__3)
+                pass
             else:
-                self._errHandler.reportMatch(self)
-                self.consume()
+                raise NoViableAltException(self)
+
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)

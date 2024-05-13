@@ -35,6 +35,11 @@ class LLVMGenerator:
       LLVMGenerator.reg += 1
 
    @staticmethod
+   def multiply(val1, val2):
+      LLVMGenerator.main_text += f"%{LLVMGenerator.reg} = mul i32 {val1}, {val2}\n"
+      LLVMGenerator.reg += 1
+
+   @staticmethod
    def generate():
       text = ""
       text += "declare i32 @printf(i8*, ...)\n"

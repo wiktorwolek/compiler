@@ -35,6 +35,24 @@ class ExprListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ExprParser#expression.
+    def enterExpression(self, ctx:ExprParser.ExpressionContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#expression.
+    def exitExpression(self, ctx:ExprParser.ExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#expression1.
+    def enterExpression1(self, ctx:ExprParser.Expression1Context):
+        pass
+
+    # Exit a parse tree produced by ExprParser#expression1.
+    def exitExpression1(self, ctx:ExprParser.Expression1Context):
+        pass
+
+
     # Enter a parse tree produced by ExprParser#write.
     def enterWrite(self, ctx:ExprParser.WriteContext):
         pass
@@ -53,15 +71,6 @@ class ExprListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ExprParser#expr.
-    def enterExpr(self, ctx:ExprParser.ExprContext):
-        pass
-
-    # Exit a parse tree produced by ExprParser#expr.
-    def exitExpr(self, ctx:ExprParser.ExprContext):
-        pass
-
-
     # Enter a parse tree produced by ExprParser#add.
     def enterAdd(self, ctx:ExprParser.AddContext):
         pass
@@ -71,12 +80,21 @@ class ExprListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ExprParser#value.
-    def enterValue(self, ctx:ExprParser.ValueContext):
+    # Enter a parse tree produced by ExprParser#multiply.
+    def enterMultiply(self, ctx:ExprParser.MultiplyContext):
         pass
 
-    # Exit a parse tree produced by ExprParser#value.
-    def exitValue(self, ctx:ExprParser.ValueContext):
+    # Exit a parse tree produced by ExprParser#multiply.
+    def exitMultiply(self, ctx:ExprParser.MultiplyContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#expression2.
+    def enterExpression2(self, ctx:ExprParser.Expression2Context):
+        pass
+
+    # Exit a parse tree produced by ExprParser#expression2.
+    def exitExpression2(self, ctx:ExprParser.Expression2Context):
         pass
 
 

@@ -22,7 +22,7 @@ class LLVMActions(ExprListener):
         f.write(code)
         print(code)
 
-    def exitValue(self, ctx:ExprParser.ValueContext): 
+    def exitExpression2(self, ctx:ExprParser.Expression2Context): 
         if ctx.ID() is not None:
             ID = ctx.ID().getText()
             if ID in self.variables:
@@ -34,7 +34,13 @@ class LLVMActions(ExprListener):
             self.stack.append(ctx.INT().getText())
 
     def exitAdd(self, ctx:ExprParser.AddContext): 
+        print(self.stack)
         LLVMGenerator.add(self.stack.pop(), self.stack.pop())
+        self.stack.append("%" + str(LLVMGenerator.reg - 1))
+
+    def exitMultiply(self, ctx:ExprParser.MultiplyContext): 
+        print(self.stack)
+        LLVMGenerator.multiply(self.stack.pop(), self.stack.pop())
         self.stack.append("%" + str(LLVMGenerator.reg - 1))
 
     def exitWrite(self, ctx:ExprParser.WriteContext):
