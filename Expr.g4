@@ -28,8 +28,6 @@ multiply: expression2 MULOP expression2;
 
 divide: expression2 DIVOP expression2;
 
-value: ID | INT;
-
 WRITE: 'write';
 
 READ: 'read';

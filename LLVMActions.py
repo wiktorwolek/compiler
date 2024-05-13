@@ -66,7 +66,7 @@ class LLVMActions(ExprListener):
         else:
             self.error(ctx.getStart().getLine(), "add type mismatch")
 
-    def exitMult(self, ctx):
+    def exitMultiply(self, ctx):
         v1 = self.stack.pop()
         v2 = self.stack.pop()
         if v1.type == v2.type:
@@ -109,7 +109,11 @@ class LLVMActions(ExprListener):
         ID = ctx.ID().getText()
         print(ID)
         if ID in self.variables:
-            LLVMGenerator.printf_i32(ID)
+            v = self.variables.get(ID)
+            if v.type == VarType.INT:
+                LLVMGenerator.printf_i32(v.name)
+            elif v.type == VarType.REAL:
+                LLVMGenerator.printf_double(v.name)
         else:
             self.error(ctx.getStart().getLine(), "unknown variable " + ID)
 
