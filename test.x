@@ -1,5 +1,7 @@
-x = 1
+read x
 y = 2
-a = 3
-z = x + y + a + 4
+a = 16
+z = x + y
 write z
+f = x * 2
+write f

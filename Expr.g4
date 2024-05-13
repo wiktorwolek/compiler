@@ -1,31 +1,55 @@
 grammar Expr;
 
-prog: ( stat? NEWLINE )* '<EOF>';
+prog: ( statement? NEWLINE)* '<EOF>';
 
-stat:	write | assign | read;
+statement: write | assign | read;
 
-assign: ID '=' expr;
+assign: ID '=' expression;
 
 write: WRITE ID;
 
 read: READ ID;
 
-expr:  add | value;
+expression: expression1 | add;
 
-add: value ADD expr;
+expression1: expression2 | multiply;
 
-value: ID | INT;	
+expression2:
+	INT						# int
+	| REAL					# real
+	| TOINT expression2		# toint
+	| TOREAL expression2	# toreal
+	| '(' expression ')'	# par
+	| ID					# id;
+
+add: expression1 ADDOP expression2;
+
+multiply: expression2 MULOP expression2;
+
+divide: expression2 DIVOP expression2;
+
+value: ID | INT;
 
 WRITE: 'write';
 
-READ:	'read';
-   
-ID:  ('a'..'z'|'A'..'Z')+;
+READ: 'read';
 
-INT: '0'..'9'+;
+TOINT: '(int)';
 
-ADD: '+';
+TOREAL: '(real)';
 
-NEWLINE:	'\r'? '\n';
+ID: ('a' ..'z' | 'A' ..'Z')+;
 
-WS:   (' '|'\t')+ -> skip;
+INT: '0' ..'9'+;
+
+REAL: '0' ..'9'+ '.' '0' ..'9'+;
+
+ADDOP: '+';
+
+MULOP: '*';
+
+DIVOP: '/';
+
+NEWLINE: '\r'? '\n';
+
+WS: (' ' | '\t')+ -> skip;

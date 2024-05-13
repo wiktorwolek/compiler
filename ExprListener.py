@@ -17,12 +17,12 @@ class ExprListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ExprParser#stat.
-    def enterStat(self, ctx:ExprParser.StatContext):
+    # Enter a parse tree produced by ExprParser#statement.
+    def enterStatement(self, ctx:ExprParser.StatementContext):
         pass
 
-    # Exit a parse tree produced by ExprParser#stat.
-    def exitStat(self, ctx:ExprParser.StatContext):
+    # Exit a parse tree produced by ExprParser#statement.
+    def exitStatement(self, ctx:ExprParser.StatementContext):
         pass
 
 
@@ -53,12 +53,75 @@ class ExprListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ExprParser#expr.
-    def enterExpr(self, ctx:ExprParser.ExprContext):
+    # Enter a parse tree produced by ExprParser#expression.
+    def enterExpression(self, ctx:ExprParser.ExpressionContext):
         pass
 
-    # Exit a parse tree produced by ExprParser#expr.
-    def exitExpr(self, ctx:ExprParser.ExprContext):
+    # Exit a parse tree produced by ExprParser#expression.
+    def exitExpression(self, ctx:ExprParser.ExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#expression1.
+    def enterExpression1(self, ctx:ExprParser.Expression1Context):
+        pass
+
+    # Exit a parse tree produced by ExprParser#expression1.
+    def exitExpression1(self, ctx:ExprParser.Expression1Context):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#int.
+    def enterInt(self, ctx:ExprParser.IntContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#int.
+    def exitInt(self, ctx:ExprParser.IntContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#real.
+    def enterReal(self, ctx:ExprParser.RealContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#real.
+    def exitReal(self, ctx:ExprParser.RealContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#toint.
+    def enterToint(self, ctx:ExprParser.TointContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#toint.
+    def exitToint(self, ctx:ExprParser.TointContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#toreal.
+    def enterToreal(self, ctx:ExprParser.TorealContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#toreal.
+    def exitToreal(self, ctx:ExprParser.TorealContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#par.
+    def enterPar(self, ctx:ExprParser.ParContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#par.
+    def exitPar(self, ctx:ExprParser.ParContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#id.
+    def enterId(self, ctx:ExprParser.IdContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#id.
+    def exitId(self, ctx:ExprParser.IdContext):
         pass
 
 
@@ -68,6 +131,24 @@ class ExprListener(ParseTreeListener):
 
     # Exit a parse tree produced by ExprParser#add.
     def exitAdd(self, ctx:ExprParser.AddContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#multiply.
+    def enterMultiply(self, ctx:ExprParser.MultiplyContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#multiply.
+    def exitMultiply(self, ctx:ExprParser.MultiplyContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#divide.
+    def enterDivide(self, ctx:ExprParser.DivideContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#divide.
+    def exitDivide(self, ctx:ExprParser.DivideContext):
         pass
 
 

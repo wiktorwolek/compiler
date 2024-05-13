@@ -33,6 +33,11 @@ class LLVMActions(ExprListener):
         if ctx.INT() is not None:
             self.stack.append(ctx.INT().getText())
 
+
+    def exitMultiply(self, ctx:ExprParser.MultiplyContext): 
+        LLVMGenerator.multiply(self.stack.pop(), self.stack.pop())
+        self.stack.append("%" + str(LLVMGenerator.reg - 1))
+
     def exitAdd(self, ctx:ExprParser.AddContext): 
         LLVMGenerator.add(self.stack.pop(), self.stack.pop())
         self.stack.append("%" + str(LLVMGenerator.reg - 1))
