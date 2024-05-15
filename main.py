@@ -2,12 +2,16 @@ from antlr4 import *
 from ExprLexer import ExprLexer
 from ExprParser import ExprParser
 
+while True:
+    input_text = input("> ")
 
-input_text = input("> ")
-lexer = ExprLexer(InputStream(input_text))
-stream = CommonTokenStream(lexer)
-parser = ExprParser(stream)
+    if input_text == "exit":
+        break
 
-tree = parser.prog()
+    lexer = ExprLexer(InputStream(input_text))
+    stream = CommonTokenStream(lexer)
+    parser = ExprParser(stream)
 
-print(tree.toStringTree(recog=parser))
+    tree = parser.prog()
+
+    print(tree.toStringTree(recog=parser))
