@@ -12,7 +12,7 @@ read: READ ID;
 
 expression: expression1 | add;
 
-expression1: expression2 | multiply;
+expression1: expression2 | multiply | divide;
 
 expression2:
 	INT						# int

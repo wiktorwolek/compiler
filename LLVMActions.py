@@ -79,6 +79,16 @@ class LLVMActions(ExprListener):
         else:
             self.error(ctx.getStart().getLine(), "mult type mismatch")
 
+    def exitDivide(self, ctx: ExprParser.DivideContext):
+        v1 = self.stack.pop()
+        v2 = self.stack.pop()
+        if v1.type == v2.type:
+            if v1.type == VarType.INT:
+                LLVMGenerator.div_i32(v1.name, v2.name)
+                self.stack.append(Value("%" + str(LLVMGenerator.reg - 1), VarType.INT))
+        else:
+            self.error(ctx.getStart().getLine(), "div unimplemented")
+
     def exitToint(self, ctx):
         v = self.stack.pop()
         LLVMGenerator.fptosi(v.name)

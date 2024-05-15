@@ -110,14 +110,6 @@ public class ExprParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_prog; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterProg(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitProg(this);
-		}
 	}
 
 	public final ProgContext prog() throws RecognitionException {
@@ -181,14 +173,6 @@ public class ExprParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_statement; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitStatement(this);
-		}
 	}
 
 	public final StatementContext statement() throws RecognitionException {
@@ -244,14 +228,6 @@ public class ExprParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_assign; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterAssign(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitAssign(this);
-		}
 	}
 
 	public final AssignContext assign() throws RecognitionException {
@@ -287,14 +263,6 @@ public class ExprParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_write; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterWrite(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitWrite(this);
-		}
 	}
 
 	public final WriteContext write() throws RecognitionException {
@@ -328,14 +296,6 @@ public class ExprParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_read; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterRead(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitRead(this);
-		}
 	}
 
 	public final ReadContext read() throws RecognitionException {
@@ -373,14 +333,6 @@ public class ExprParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expression; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitExpression(this);
-		}
 	}
 
 	public final ExpressionContext expression() throws RecognitionException {
@@ -425,25 +377,20 @@ public class ExprParser extends Parser {
 		public MultiplyContext multiply() {
 			return getRuleContext(MultiplyContext.class,0);
 		}
+		public DivideContext divide() {
+			return getRuleContext(DivideContext.class,0);
+		}
 		public Expression1Context(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expression1; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterExpression1(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitExpression1(this);
-		}
 	}
 
 	public final Expression1Context expression1() throws RecognitionException {
 		Expression1Context _localctx = new Expression1Context(_ctx, getState());
 		enterRule(_localctx, 12, RULE_expression1);
 		try {
-			setState(54);
+			setState(55);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
@@ -458,6 +405,13 @@ public class ExprParser extends Parser {
 				{
 				setState(53);
 				multiply();
+				}
+				break;
+			case 3:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(54);
+				divide();
 				}
 				break;
 			}
@@ -491,14 +445,6 @@ public class ExprParser extends Parser {
 			return getRuleContext(ExpressionContext.class,0);
 		}
 		public ParContext(Expression2Context ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterPar(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitPar(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class TointContext extends Expression2Context {
@@ -507,14 +453,6 @@ public class ExprParser extends Parser {
 			return getRuleContext(Expression2Context.class,0);
 		}
 		public TointContext(Expression2Context ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterToint(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitToint(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class TorealContext extends Expression2Context {
@@ -523,67 +461,35 @@ public class ExprParser extends Parser {
 			return getRuleContext(Expression2Context.class,0);
 		}
 		public TorealContext(Expression2Context ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterToreal(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitToreal(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class RealContext extends Expression2Context {
 		public TerminalNode REAL() { return getToken(ExprParser.REAL, 0); }
 		public RealContext(Expression2Context ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterReal(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitReal(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class IdContext extends Expression2Context {
 		public TerminalNode ID() { return getToken(ExprParser.ID, 0); }
 		public IdContext(Expression2Context ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterId(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitId(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class IntContext extends Expression2Context {
 		public TerminalNode INT() { return getToken(ExprParser.INT, 0); }
 		public IntContext(Expression2Context ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterInt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitInt(this);
-		}
 	}
 
 	public final Expression2Context expression2() throws RecognitionException {
 		Expression2Context _localctx = new Expression2Context(_ctx, getState());
 		enterRule(_localctx, 14, RULE_expression2);
 		try {
-			setState(67);
+			setState(68);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case INT:
 				_localctx = new IntContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(56);
+				setState(57);
 				match(INT);
 				}
 				break;
@@ -591,7 +497,7 @@ public class ExprParser extends Parser {
 				_localctx = new RealContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(57);
+				setState(58);
 				match(REAL);
 				}
 				break;
@@ -599,9 +505,9 @@ public class ExprParser extends Parser {
 				_localctx = new TointContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(58);
-				match(TOINT);
 				setState(59);
+				match(TOINT);
+				setState(60);
 				expression2();
 				}
 				break;
@@ -609,9 +515,9 @@ public class ExprParser extends Parser {
 				_localctx = new TorealContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(60);
-				match(TOREAL);
 				setState(61);
+				match(TOREAL);
+				setState(62);
 				expression2();
 				}
 				break;
@@ -619,11 +525,11 @@ public class ExprParser extends Parser {
 				_localctx = new ParContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(62);
-				match(T__2);
 				setState(63);
-				expression();
+				match(T__2);
 				setState(64);
+				expression();
+				setState(65);
 				match(T__3);
 				}
 				break;
@@ -631,7 +537,7 @@ public class ExprParser extends Parser {
 				_localctx = new IdContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(66);
+				setState(67);
 				match(ID);
 				}
 				break;
@@ -663,14 +569,6 @@ public class ExprParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_add; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterAdd(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitAdd(this);
-		}
 	}
 
 	public final AddContext add() throws RecognitionException {
@@ -679,11 +577,11 @@ public class ExprParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(69);
-			expression1();
 			setState(70);
-			match(ADDOP);
+			expression1();
 			setState(71);
+			match(ADDOP);
+			setState(72);
 			expression();
 			}
 		}
@@ -711,14 +609,6 @@ public class ExprParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_multiply; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterMultiply(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitMultiply(this);
-		}
 	}
 
 	public final MultiplyContext multiply() throws RecognitionException {
@@ -727,11 +617,11 @@ public class ExprParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(73);
-			expression2();
 			setState(74);
-			match(MULOP);
+			expression2();
 			setState(75);
+			match(MULOP);
+			setState(76);
 			expression2();
 			}
 		}
@@ -759,14 +649,6 @@ public class ExprParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_divide; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterDivide(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitDivide(this);
-		}
 	}
 
 	public final DivideContext divide() throws RecognitionException {
@@ -775,11 +657,11 @@ public class ExprParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(77);
-			expression2();
 			setState(78);
-			match(DIVOP);
+			expression2();
 			setState(79);
+			match(DIVOP);
+			setState(80);
 			expression2();
 			}
 		}
@@ -795,7 +677,7 @@ public class ExprParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0010R\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001\u0010S\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
 		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0001\u0000\u0003\u0000\u0018"+
@@ -803,44 +685,45 @@ public class ExprParser extends Parser {
 		"\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0003"+
 		"\u0001%\b\u0001\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001"+
 		"\u0003\u0001\u0003\u0001\u0003\u0001\u0004\u0001\u0004\u0001\u0004\u0001"+
-		"\u0005\u0001\u0005\u0003\u00053\b\u0005\u0001\u0006\u0001\u0006\u0003"+
-		"\u00067\b\u0006\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001"+
+		"\u0005\u0001\u0005\u0003\u00053\b\u0005\u0001\u0006\u0001\u0006\u0001"+
+		"\u0006\u0003\u00068\b\u0006\u0001\u0007\u0001\u0007\u0001\u0007\u0001"+
 		"\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001"+
-		"\u0007\u0003\u0007D\b\u0007\u0001\b\u0001\b\u0001\b\u0001\b\u0001\t\u0001"+
-		"\t\u0001\t\u0001\t\u0001\n\u0001\n\u0001\n\u0001\n\u0001\n\u0000\u0000"+
-		"\u000b\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0000\u0000"+
-		"Q\u0000\u001c\u0001\u0000\u0000\u0000\u0002$\u0001\u0000\u0000\u0000\u0004"+
-		"&\u0001\u0000\u0000\u0000\u0006*\u0001\u0000\u0000\u0000\b-\u0001\u0000"+
-		"\u0000\u0000\n2\u0001\u0000\u0000\u0000\f6\u0001\u0000\u0000\u0000\u000e"+
-		"C\u0001\u0000\u0000\u0000\u0010E\u0001\u0000\u0000\u0000\u0012I\u0001"+
-		"\u0000\u0000\u0000\u0014M\u0001\u0000\u0000\u0000\u0016\u0018\u0003\u0002"+
-		"\u0001\u0000\u0017\u0016\u0001\u0000\u0000\u0000\u0017\u0018\u0001\u0000"+
-		"\u0000\u0000\u0018\u0019\u0001\u0000\u0000\u0000\u0019\u001b\u0005\u000f"+
-		"\u0000\u0000\u001a\u0017\u0001\u0000\u0000\u0000\u001b\u001e\u0001\u0000"+
-		"\u0000\u0000\u001c\u001a\u0001\u0000\u0000\u0000\u001c\u001d\u0001\u0000"+
-		"\u0000\u0000\u001d\u001f\u0001\u0000\u0000\u0000\u001e\u001c\u0001\u0000"+
-		"\u0000\u0000\u001f \u0005\u0001\u0000\u0000 \u0001\u0001\u0000\u0000\u0000"+
-		"!%\u0003\u0006\u0003\u0000\"%\u0003\u0004\u0002\u0000#%\u0003\b\u0004"+
-		"\u0000$!\u0001\u0000\u0000\u0000$\"\u0001\u0000\u0000\u0000$#\u0001\u0000"+
-		"\u0000\u0000%\u0003\u0001\u0000\u0000\u0000&\'\u0005\t\u0000\u0000\'("+
-		"\u0005\u0002\u0000\u0000()\u0003\n\u0005\u0000)\u0005\u0001\u0000\u0000"+
+		"\u0007\u0001\u0007\u0003\u0007E\b\u0007\u0001\b\u0001\b\u0001\b\u0001"+
+		"\b\u0001\t\u0001\t\u0001\t\u0001\t\u0001\n\u0001\n\u0001\n\u0001\n\u0001"+
+		"\n\u0000\u0000\u000b\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014"+
+		"\u0000\u0000S\u0000\u001c\u0001\u0000\u0000\u0000\u0002$\u0001\u0000\u0000"+
+		"\u0000\u0004&\u0001\u0000\u0000\u0000\u0006*\u0001\u0000\u0000\u0000\b"+
+		"-\u0001\u0000\u0000\u0000\n2\u0001\u0000\u0000\u0000\f7\u0001\u0000\u0000"+
+		"\u0000\u000eD\u0001\u0000\u0000\u0000\u0010F\u0001\u0000\u0000\u0000\u0012"+
+		"J\u0001\u0000\u0000\u0000\u0014N\u0001\u0000\u0000\u0000\u0016\u0018\u0003"+
+		"\u0002\u0001\u0000\u0017\u0016\u0001\u0000\u0000\u0000\u0017\u0018\u0001"+
+		"\u0000\u0000\u0000\u0018\u0019\u0001\u0000\u0000\u0000\u0019\u001b\u0005"+
+		"\u000f\u0000\u0000\u001a\u0017\u0001\u0000\u0000\u0000\u001b\u001e\u0001"+
+		"\u0000\u0000\u0000\u001c\u001a\u0001\u0000\u0000\u0000\u001c\u001d\u0001"+
+		"\u0000\u0000\u0000\u001d\u001f\u0001\u0000\u0000\u0000\u001e\u001c\u0001"+
+		"\u0000\u0000\u0000\u001f \u0005\u0001\u0000\u0000 \u0001\u0001\u0000\u0000"+
+		"\u0000!%\u0003\u0006\u0003\u0000\"%\u0003\u0004\u0002\u0000#%\u0003\b"+
+		"\u0004\u0000$!\u0001\u0000\u0000\u0000$\"\u0001\u0000\u0000\u0000$#\u0001"+
+		"\u0000\u0000\u0000%\u0003\u0001\u0000\u0000\u0000&\'\u0005\t\u0000\u0000"+
+		"\'(\u0005\u0002\u0000\u0000()\u0003\n\u0005\u0000)\u0005\u0001\u0000\u0000"+
 		"\u0000*+\u0005\u0005\u0000\u0000+,\u0005\t\u0000\u0000,\u0007\u0001\u0000"+
 		"\u0000\u0000-.\u0005\u0006\u0000\u0000./\u0005\t\u0000\u0000/\t\u0001"+
 		"\u0000\u0000\u000003\u0003\f\u0006\u000013\u0003\u0010\b\u000020\u0001"+
 		"\u0000\u0000\u000021\u0001\u0000\u0000\u00003\u000b\u0001\u0000\u0000"+
-		"\u000047\u0003\u000e\u0007\u000057\u0003\u0012\t\u000064\u0001\u0000\u0000"+
-		"\u000065\u0001\u0000\u0000\u00007\r\u0001\u0000\u0000\u00008D\u0005\n"+
-		"\u0000\u00009D\u0005\u000b\u0000\u0000:;\u0005\u0007\u0000\u0000;D\u0003"+
-		"\u000e\u0007\u0000<=\u0005\b\u0000\u0000=D\u0003\u000e\u0007\u0000>?\u0005"+
-		"\u0003\u0000\u0000?@\u0003\n\u0005\u0000@A\u0005\u0004\u0000\u0000AD\u0001"+
-		"\u0000\u0000\u0000BD\u0005\t\u0000\u0000C8\u0001\u0000\u0000\u0000C9\u0001"+
-		"\u0000\u0000\u0000C:\u0001\u0000\u0000\u0000C<\u0001\u0000\u0000\u0000"+
-		"C>\u0001\u0000\u0000\u0000CB\u0001\u0000\u0000\u0000D\u000f\u0001\u0000"+
-		"\u0000\u0000EF\u0003\f\u0006\u0000FG\u0005\f\u0000\u0000GH\u0003\n\u0005"+
-		"\u0000H\u0011\u0001\u0000\u0000\u0000IJ\u0003\u000e\u0007\u0000JK\u0005"+
-		"\r\u0000\u0000KL\u0003\u000e\u0007\u0000L\u0013\u0001\u0000\u0000\u0000"+
-		"MN\u0003\u000e\u0007\u0000NO\u0005\u000e\u0000\u0000OP\u0003\u000e\u0007"+
-		"\u0000P\u0015\u0001\u0000\u0000\u0000\u0006\u0017\u001c$26C";
+		"\u000048\u0003\u000e\u0007\u000058\u0003\u0012\t\u000068\u0003\u0014\n"+
+		"\u000074\u0001\u0000\u0000\u000075\u0001\u0000\u0000\u000076\u0001\u0000"+
+		"\u0000\u00008\r\u0001\u0000\u0000\u00009E\u0005\n\u0000\u0000:E\u0005"+
+		"\u000b\u0000\u0000;<\u0005\u0007\u0000\u0000<E\u0003\u000e\u0007\u0000"+
+		"=>\u0005\b\u0000\u0000>E\u0003\u000e\u0007\u0000?@\u0005\u0003\u0000\u0000"+
+		"@A\u0003\n\u0005\u0000AB\u0005\u0004\u0000\u0000BE\u0001\u0000\u0000\u0000"+
+		"CE\u0005\t\u0000\u0000D9\u0001\u0000\u0000\u0000D:\u0001\u0000\u0000\u0000"+
+		"D;\u0001\u0000\u0000\u0000D=\u0001\u0000\u0000\u0000D?\u0001\u0000\u0000"+
+		"\u0000DC\u0001\u0000\u0000\u0000E\u000f\u0001\u0000\u0000\u0000FG\u0003"+
+		"\f\u0006\u0000GH\u0005\f\u0000\u0000HI\u0003\n\u0005\u0000I\u0011\u0001"+
+		"\u0000\u0000\u0000JK\u0003\u000e\u0007\u0000KL\u0005\r\u0000\u0000LM\u0003"+
+		"\u000e\u0007\u0000M\u0013\u0001\u0000\u0000\u0000NO\u0003\u000e\u0007"+
+		"\u0000OP\u0005\u000e\u0000\u0000PQ\u0003\u000e\u0007\u0000Q\u0015\u0001"+
+		"\u0000\u0000\u0000\u0006\u0017\u001c$27D";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -59,6 +59,13 @@ class LLVMGenerator:
         LLVMGenerator.reg += 1
 
     @staticmethod
+    def div_i32(val1, val2):
+        # %11 = sdiv i32 %9, %10
+        LLVMGenerator.main_text += f"; taken from stack: v1:{val1}, v2:{val2}"
+        LLVMGenerator.main_text += f"%{LLVMGenerator.reg} = sdiv i32 {val1}, {val2}\n"
+        LLVMGenerator.reg += 1
+
+    @staticmethod
     def mult_double(val1, val2):
         LLVMGenerator.main_text += f"%{LLVMGenerator.reg} = fmul double {val1}, {val2}\n"
         LLVMGenerator.reg += 1
@@ -68,14 +75,19 @@ class LLVMGenerator:
         LLVMGenerator.main_text += f"%{LLVMGenerator.reg} = sitofp i32 {id} to double\n"
         LLVMGenerator.reg += 1
 
+
     @staticmethod
     def fptosi(id):
         LLVMGenerator.main_text += f"%{LLVMGenerator.reg} = fptosi double {id} to i32\n"
         LLVMGenerator.reg += 1
+
+
     @staticmethod
     def scanf(id):
       LLVMGenerator.main_text += f"%{LLVMGenerator.reg} = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @strs, i32 0, i32 0), i32* %{id})\n"
       LLVMGenerator.reg += 1
+
+      
     @staticmethod
     def generate():
       text = ""
