@@ -92,8 +92,12 @@ class LLVMActions(ExprListener):
             if v1.type == VarType.INT:
                 LLVMGenerator.div_i32(v2.name, v1.name)
                 self.stack.append(Value("%" + str(LLVMGenerator.reg - 1), VarType.INT))
+        elif v2.type == VarType.REAL and v1.type == VarType.INT:
+            self.error(ctx.getStart().getLine(), "dividing real by int")
+        elif v2.type == VarType.INT and v1.type == VarType.REAL:
+            self.error(ctx.getStart().getLine(), "dividing int by real")
         else:
-            self.error(ctx.getStart().getLine(), "div unimplemented")
+            self.error(ctx.getStart().getLine(), "div unimplemented case")
 
     def exitToint(self, ctx):
         v = self.stack.pop()
