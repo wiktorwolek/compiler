@@ -152,14 +152,5 @@ class ExprListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ExprParser#value.
-    def enterValue(self, ctx:ExprParser.ValueContext):
-        pass
-
-    # Exit a parse tree produced by ExprParser#value.
-    def exitValue(self, ctx:ExprParser.ValueContext):
-        pass
-
-
 
 del ExprParser
