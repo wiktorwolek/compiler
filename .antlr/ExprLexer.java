@@ -17,7 +17,7 @@ public class ExprLexer extends Lexer {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, WRITE=5, READ=6, TOINT=7, TOREAL=8, ID=9, 
-		INT=10, REAL=11, ADDOP=12, MULOP=13, DIVOP=14, NEWLINE=15, WS=16;
+		INT=10, REAL=11, DIVOP=12, MULOP=13, ADDOP=14, NEWLINE=15, WS=16;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
 	};
@@ -29,7 +29,7 @@ public class ExprLexer extends Lexer {
 	private static String[] makeRuleNames() {
 		return new String[] {
 			"T__0", "T__1", "T__2", "T__3", "WRITE", "READ", "TOINT", "TOREAL", "ID", 
-			"INT", "REAL", "ADDOP", "MULOP", "DIVOP", "NEWLINE", "WS"
+			"INT", "REAL", "DIVOP", "MULOP", "ADDOP", "NEWLINE", "WS"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -37,14 +37,14 @@ public class ExprLexer extends Lexer {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'<EOF>'", "'='", "'('", "')'", "'write'", "'read'", "'(int)'", 
-			"'(real)'", null, null, null, "'+'", "'*'", "'/'"
+			"'(real)'", null, null, null, "'/'", "'*'", "'+'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, null, null, null, "WRITE", "READ", "TOINT", "TOREAL", "ID", 
-			"INT", "REAL", "ADDOP", "MULOP", "DIVOP", "NEWLINE", "WS"
+			"INT", "REAL", "DIVOP", "MULOP", "ADDOP", "NEWLINE", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -160,9 +160,9 @@ public class ExprLexer extends Lexer {
 		"P\u0001\u0000\u0000\u0000RS\u0001\u0000\u0000\u0000ST\u0001\u0000\u0000"+
 		"\u0000TV\u0005.\u0000\u0000UW\u000209\u0000VU\u0001\u0000\u0000\u0000"+
 		"WX\u0001\u0000\u0000\u0000XV\u0001\u0000\u0000\u0000XY\u0001\u0000\u0000"+
-		"\u0000Y\u0016\u0001\u0000\u0000\u0000Z[\u0005+\u0000\u0000[\u0018\u0001"+
+		"\u0000Y\u0016\u0001\u0000\u0000\u0000Z[\u0005/\u0000\u0000[\u0018\u0001"+
 		"\u0000\u0000\u0000\\]\u0005*\u0000\u0000]\u001a\u0001\u0000\u0000\u0000"+
-		"^_\u0005/\u0000\u0000_\u001c\u0001\u0000\u0000\u0000`b\u0005\r\u0000\u0000"+
+		"^_\u0005+\u0000\u0000_\u001c\u0001\u0000\u0000\u0000`b\u0005\r\u0000\u0000"+
 		"a`\u0001\u0000\u0000\u0000ab\u0001\u0000\u0000\u0000bc\u0001\u0000\u0000"+
 		"\u0000cd\u0005\n\u0000\u0000d\u001e\u0001\u0000\u0000\u0000eg\u0007\u0001"+
 		"\u0000\u0000fe\u0001\u0000\u0000\u0000gh\u0001\u0000\u0000\u0000hf\u0001"+

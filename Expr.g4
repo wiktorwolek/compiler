@@ -42,12 +42,12 @@ INT: '0' ..'9'+;
 
 REAL: '0' ..'9'+ '.' '0' ..'9'+;
 
-ADDOP: '+';
+DIVOP: '/';
 
 MULOP: '*';
 
-DIVOP: '/';
+ADDOP: '+';
 
 NEWLINE: '\r'? '\n';
 
-COMM WS: (' ' | '\t')+ -> skip;
+WS: (' ' | '\t')+ -> skip;

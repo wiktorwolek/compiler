@@ -9,7 +9,6 @@ from LLVMGenerator import LLVMGenerator
 def main(args):
 
     if len(args) > 1:
-        print(args)
         # Step 1: Load input source into the stream object
         stream = FileStream(args[1])
 
