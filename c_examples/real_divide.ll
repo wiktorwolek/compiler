@@ -1,5 +1,5 @@
-; ModuleID = 'int_divide.c'
-source_filename = "int_divide.c"
+; ModuleID = 'real_divide.c'
+source_filename = "real_divide.c"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
@@ -7,17 +7,17 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local i32 @main(i32 noundef %0, i8** noundef %1) #0 {
   %3 = alloca i32, align 4
   %4 = alloca i8**, align 8
-  %5 = alloca i32, align 4
-  %6 = alloca i32, align 4
-  %7 = alloca i32, align 4
+  %5 = alloca float, align 4
+  %6 = alloca float, align 4
+  %7 = alloca float, align 4
   store i32 %0, i32* %3, align 4
   store i8** %1, i8*** %4, align 8
-  store i32 12, i32* %5, align 4
-  store i32 3, i32* %6, align 4
-  %8 = load i32, i32* %5, align 4
-  %9 = load i32, i32* %6, align 4
-  %10 = sdiv i32 %8, %9
-  store i32 %10, i32* %7, align 4
+  store float 0x40289999A0000000, float* %5, align 4
+  store float 0x40099999A0000000, float* %6, align 4
+  %8 = load float, float* %5, align 4
+  %9 = load float, float* %6, align 4
+  %10 = fdiv float %8, %9
+  store float %10, float* %7, align 4
   ret i32 0
 }
 

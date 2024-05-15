@@ -19,6 +19,8 @@ class LLVMActions(ExprListener):
     def __init__(self):
         self.variables = {}
         self.stack = []
+
+
     def exitAssign(self, ctx):
         ID = ctx.ID().getText()
         v = self.stack.pop()
@@ -29,6 +31,8 @@ class LLVMActions(ExprListener):
         elif v.type == VarType.REAL:
             LLVMGenerator.declare_double(ID)
             LLVMGenerator.assign_double(ID, v.name)
+
+
     def exitId(self, ctx: ExprParser.IdContext):
         v = self.variables.get(str(ctx.ID()))
         if v.type == VarType.INT:
@@ -37,6 +41,8 @@ class LLVMActions(ExprListener):
             LLVMGenerator.load_double(v.name)
         self.stack.append(Value("%"+str(LLVMGenerator.reg-1),v.type))
         print(self.stack)
+
+        
     def exitProg(self, ctx):
         code = LLVMGenerator.generate()
         f = open("prog.ll","w")

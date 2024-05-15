@@ -50,4 +50,4 @@ DIVOP: '/';
 
 NEWLINE: '\r'? '\n';
 
-WS: (' ' | '\t')+ -> skip;
+COMM WS: (' ' | '\t')+ -> skip;
