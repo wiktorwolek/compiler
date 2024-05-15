@@ -4,6 +4,7 @@ __pycache__/*
 
 *.exe 
 *.out
+.antlr/*
 
 # C extensions
 *.so
