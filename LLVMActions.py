@@ -90,7 +90,7 @@ class LLVMActions(ExprListener):
         v2 = self.stack.pop()
         if v1.type == v2.type:
             if v1.type == VarType.INT:
-                LLVMGenerator.div_i32(v1.name, v2.name)
+                LLVMGenerator.div_i32(v2.name, v1.name)
                 self.stack.append(Value("%" + str(LLVMGenerator.reg - 1), VarType.INT))
         else:
             self.error(ctx.getStart().getLine(), "div unimplemented")

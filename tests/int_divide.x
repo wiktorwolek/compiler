@@ -1,8 +1,8 @@
 a = 32
 b = 8
-c = 3
+c = 8
 
-d = a/b
+d = a*b
 e = a/c
 
 write d
