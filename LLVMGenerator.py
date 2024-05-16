@@ -61,8 +61,14 @@ class LLVMGenerator:
     @staticmethod
     def div_i32(val1, val2):
         # %11 = sdiv i32 %9, %10
-        LLVMGenerator.main_text += f"; DIV: taken from stack: v1:{val1}, v2:{val2}\n"
+        LLVMGenerator.main_text += f"; DIV: taken from stack: v1: {val1}, v2: {val2}\n"
         LLVMGenerator.main_text += f"%{LLVMGenerator.reg} = sdiv i32 {val1}, {val2}\n"
+        LLVMGenerator.reg += 1
+
+    @staticmethod
+    def div_i32(val1, val2):
+        # %10 = fdiv float %8, %9
+        LLVMGenerator.main_text += f"%{LLVMGenerator.reg} = fdiv float {val1}, {val2}\n"
         LLVMGenerator.reg += 1
 
     @staticmethod
@@ -93,10 +99,10 @@ class LLVMGenerator:
       text = ""
       text += "declare i32 @printf(i8*, ...)\n"
       text += "declare i32 @__isoc99_scanf(i8*, ...)\n"
-      text += "@strp = constant [4 x i8] c\"%d\\0A\\00\"\n"
+      text += "@strp  = constant [4 x i8] c\"%d\\0A\\00\"\n"
       text += "@strpi = constant [4 x i8] c\"%d\\0A\\00\"\n";
       text += "@strpd = constant [4 x i8] c\"%f\\0A\\00\"\n";
-      text += "@strs = constant [3 x i8] c\"%d\\00\"\n"
+      text += "@strs  = constant [3 x i8] c\"%d\\00\"\n"
       text += LLVMGenerator.header_text
       text += "define i32 @main() nounwind{\n"
       text += LLVMGenerator.main_text

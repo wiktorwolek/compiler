@@ -7,7 +7,8 @@ while True:
 
     if input_text == "exit":
         break
-
+    
+    input_text += "\n<EOF>"
     lexer = ExprLexer(InputStream(input_text))
     stream = CommonTokenStream(lexer)
     parser = ExprParser(stream)
