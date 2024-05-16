@@ -88,16 +88,23 @@ class LLVMActions(ExprListener):
     def exitDivide(self, ctx: ExprParser.DivideContext):
         v1 = self.stack.pop()
         v2 = self.stack.pop()
+
+        if v2.type == VarType.REAL and v1.type == VarType.INT:
+            LLVMGenerator.sitofp(v1.name)
+            self.stack.append(Value("%" + str(LLVMGenerator.reg - 1), VarType.REAL))
+            v1 = self.stack.pop()
+        if v2.type == VarType.INT and v1.type == VarType.REAL:
+            LLVMGenerator.sitofp(v2.name)
+            self.stack.append(Value("%" + str(LLVMGenerator.reg - 1), VarType.REAL))
+            v2 = self.stack.pop()
+
         if v1.type == v2.type:
             if v1.type == VarType.INT:
                 LLVMGenerator.div_i32(v2.name, v1.name)
-                self.stack.append(Value("%" + str(LLVMGenerator.reg - 1), VarType.INT))
-        elif v2.type == VarType.REAL and v1.type == VarType.INT:
-            self.error(ctx.getStart().getLine(), "dividing real by int")
-        elif v2.type == VarType.INT and v1.type == VarType.REAL:
-            self.error(ctx.getStart().getLine(), "dividing int by real")
-        else:
-            self.error(ctx.getStart().getLine(), "div unimplemented case")
+                self.stack.append(Value("%" + str(LLVMGenerator.reg - 1), VarType.REAL))
+            else:
+                LLVMGenerator.div_double(v2.name, v1.name)
+                self.stack.append(Value("%" + str(LLVMGenerator.reg - 1), VarType.REAL))
 
     def exitToint(self, ctx):
         v = self.stack.pop()

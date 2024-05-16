@@ -7,17 +7,17 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local i32 @main(i32 noundef %0, i8** noundef %1) #0 {
   %3 = alloca i32, align 4
   %4 = alloca i8**, align 8
-  %5 = alloca float, align 4
-  %6 = alloca float, align 4
-  %7 = alloca float, align 4
+  %5 = alloca double, align 8
+  %6 = alloca double, align 8
+  %7 = alloca double, align 8
   store i32 %0, i32* %3, align 4
   store i8** %1, i8*** %4, align 8
-  store float 0x40289999A0000000, float* %5, align 4
-  store float 0x40099999A0000000, float* %6, align 4
-  %8 = load float, float* %5, align 4
-  %9 = load float, float* %6, align 4
-  %10 = fdiv float %8, %9
-  store float %10, float* %7, align 4
+  store double 1.230000e+01, double* %5, align 8
+  store double 3.200000e+00, double* %6, align 8
+  %8 = load double, double* %5, align 8
+  %9 = load double, double* %6, align 8
+  %10 = fdiv double %8, %9
+  store double %10, double* %7, align 8
   ret i32 0
 }
 

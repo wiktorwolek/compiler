@@ -1,6 +1,6 @@
 GRAMMAR=Expr.g4
 START=prog
-TEST=tests/int_divide.x
+TEST=tests/real_divide.x
 
 ifeq ($(OS),Windows_NT)
 	EXT=a.exe

@@ -66,9 +66,9 @@ class LLVMGenerator:
         LLVMGenerator.reg += 1
 
     @staticmethod
-    def div_i32(val1, val2):
+    def div_double(val1, val2):
         # %10 = fdiv float %8, %9
-        LLVMGenerator.main_text += f"%{LLVMGenerator.reg} = fdiv float {val1}, {val2}\n"
+        LLVMGenerator.main_text += f"%{LLVMGenerator.reg} = fdiv double {val1}, {val2}\n"
         LLVMGenerator.reg += 1
 
     @staticmethod
