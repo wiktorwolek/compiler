@@ -17,12 +17,39 @@ class ExprListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ExprParser#statement.
-    def enterStatement(self, ctx:ExprParser.StatementContext):
+    # Enter a parse tree produced by ExprParser#write1.
+    def enterWrite1(self, ctx:ExprParser.Write1Context):
         pass
 
-    # Exit a parse tree produced by ExprParser#statement.
-    def exitStatement(self, ctx:ExprParser.StatementContext):
+    # Exit a parse tree produced by ExprParser#write1.
+    def exitWrite1(self, ctx:ExprParser.Write1Context):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#assign1.
+    def enterAssign1(self, ctx:ExprParser.Assign1Context):
+        pass
+
+    # Exit a parse tree produced by ExprParser#assign1.
+    def exitAssign1(self, ctx:ExprParser.Assign1Context):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#read1.
+    def enterRead1(self, ctx:ExprParser.Read1Context):
+        pass
+
+    # Exit a parse tree produced by ExprParser#read1.
+    def exitRead1(self, ctx:ExprParser.Read1Context):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#assigntable1.
+    def enterAssigntable1(self, ctx:ExprParser.Assigntable1Context):
+        pass
+
+    # Exit a parse tree produced by ExprParser#assigntable1.
+    def exitAssigntable1(self, ctx:ExprParser.Assigntable1Context):
         pass
 
 
@@ -32,6 +59,42 @@ class ExprListener(ParseTreeListener):
 
     # Exit a parse tree produced by ExprParser#assign.
     def exitAssign(self, ctx:ExprParser.AssignContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#assigntable.
+    def enterAssigntable(self, ctx:ExprParser.AssigntableContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#assigntable.
+    def exitAssigntable(self, ctx:ExprParser.AssigntableContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#newtable.
+    def enterNewtable(self, ctx:ExprParser.NewtableContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#newtable.
+    def exitNewtable(self, ctx:ExprParser.NewtableContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#tablerow.
+    def enterTablerow(self, ctx:ExprParser.TablerowContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#tablerow.
+    def exitTablerow(self, ctx:ExprParser.TablerowContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#tableitem.
+    def enterTableitem(self, ctx:ExprParser.TableitemContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#tableitem.
+    def exitTableitem(self, ctx:ExprParser.TableitemContext):
         pass
 
 
@@ -116,12 +179,48 @@ class ExprListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ExprParser#ids.
+    def enterIds(self, ctx:ExprParser.IdsContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#ids.
+    def exitIds(self, ctx:ExprParser.IdsContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#call.
+    def enterCall(self, ctx:ExprParser.CallContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#call.
+    def exitCall(self, ctx:ExprParser.CallContext):
+        pass
+
+
     # Enter a parse tree produced by ExprParser#id.
     def enterId(self, ctx:ExprParser.IdContext):
         pass
 
     # Exit a parse tree produced by ExprParser#id.
     def exitId(self, ctx:ExprParser.IdContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#table.
+    def enterTable(self, ctx:ExprParser.TableContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#table.
+    def exitTable(self, ctx:ExprParser.TableContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#indexes.
+    def enterIndexes(self, ctx:ExprParser.IndexesContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#indexes.
+    def exitIndexes(self, ctx:ExprParser.IndexesContext):
         pass
 
 
@@ -152,12 +251,30 @@ class ExprListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ExprParser#value.
-    def enterValue(self, ctx:ExprParser.ValueContext):
+    # Enter a parse tree produced by ExprParser#function.
+    def enterFunction(self, ctx:ExprParser.FunctionContext):
         pass
 
-    # Exit a parse tree produced by ExprParser#value.
-    def exitValue(self, ctx:ExprParser.ValueContext):
+    # Exit a parse tree produced by ExprParser#function.
+    def exitFunction(self, ctx:ExprParser.FunctionContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#fparam.
+    def enterFparam(self, ctx:ExprParser.FparamContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#fparam.
+    def exitFparam(self, ctx:ExprParser.FparamContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#fblock.
+    def enterFblock(self, ctx:ExprParser.FblockContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#fblock.
+    def exitFblock(self, ctx:ExprParser.FblockContext):
         pass
 
 

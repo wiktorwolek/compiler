@@ -26,7 +26,10 @@ def main(args):
     try:
         walker.walk(LLVMActions(), tree)
     except:
-         print(LLVMGenerator().generate())
-         print(":(")
+        print(LLVMGenerator().generate())
+
+        print(LLVMGenerator.buffer)
+
+        print(":(")
 if __name__ == '__main__':
     main(sys.argv)

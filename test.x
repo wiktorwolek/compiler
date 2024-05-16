@@ -1,4 +1,8 @@
-y = 2.1
-a = 16.1
-z =  (int)((a + 1.1) * y)
-write z
+x = 1 
+function fun
+  fun = 3
+endfunction
+
+
+zosia = (call fun() + 4) * 2 + (int)((real)call fun() +1.6)
+write zosia
