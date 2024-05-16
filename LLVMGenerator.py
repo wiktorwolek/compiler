@@ -61,7 +61,6 @@ class LLVMGenerator:
     @staticmethod
     def div_i32(val1, val2):
         # %11 = sdiv i32 %9, %10
-        LLVMGenerator.main_text += f"; DIV: taken from stack: v1: {val1}, v2: {val2}\n"
         LLVMGenerator.main_text += f"%{LLVMGenerator.reg} = sdiv i32 {val1}, {val2}\n"
         LLVMGenerator.reg += 1
 
