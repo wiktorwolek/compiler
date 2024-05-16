@@ -59,7 +59,6 @@ class LLVMActions(ExprListener):
         self.stack.append(Value(ctx.REAL().getText(), VarType.REAL))
 
     def exitAdd(self, ctx):
-        print(self.stack)
         v1 = self.stack.pop()
         v2 = self.stack.pop()
         if v1.type == v2.type:
@@ -71,6 +70,19 @@ class LLVMActions(ExprListener):
                 self.stack.append(Value("%" + str(LLVMGenerator.reg - 1), VarType.REAL))
         else:
             self.error(ctx.getStart().getLine(), "add type mismatch")
+
+    def exitSubstract(self, ctx: ExprParser.SubstractContext):
+        v1 = self.stack.pop()
+        v2 = self.stack.pop()
+        if v1.type == v2.type:
+            if v1.type == VarType.INT:
+                LLVMGenerator.sub_i32(v1.name, v2.name)
+                self.stack.append(Value("%" + str(LLVMGenerator.reg - 1), VarType.INT))
+            elif v1.type == VarType.REAL:
+                LLVMGenerator.sub_double(v1.name, v2.name)
+                self.stack.append(Value("%" + str(LLVMGenerator.reg - 1), VarType.REAL))
+        else:
+            self.error(ctx.getStart().getLine(), "substract type mismatch")
 
     def exitMultiply(self, ctx):
         v1 = self.stack.pop()

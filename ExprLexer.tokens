@@ -12,8 +12,9 @@ REAL=11
 DIVOP=12
 MULOP=13
 ADDOP=14
-NEWLINE=15
-WS=16
+SUBOP=15
+NEWLINE=16
+WS=17
 '<EOF>'=1
 '='=2
 '('=3
@@ -25,3 +26,4 @@ WS=16
 '/'=12
 '*'=13
 '+'=14
+'-'=15

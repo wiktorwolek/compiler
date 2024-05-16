@@ -134,6 +134,15 @@ class ExprListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ExprParser#substract.
+    def enterSubstract(self, ctx:ExprParser.SubstractContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#substract.
+    def exitSubstract(self, ctx:ExprParser.SubstractContext):
+        pass
+
+
     # Enter a parse tree produced by ExprParser#multiply.
     def enterMultiply(self, ctx:ExprParser.MultiplyContext):
         pass

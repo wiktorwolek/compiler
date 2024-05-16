@@ -54,6 +54,16 @@ class LLVMGenerator:
         LLVMGenerator.reg += 1
 
     @staticmethod
+    def sub_i32(val1, val2):
+        LLVMGenerator.main_text += f"%{LLVMGenerator.reg} = sub nuw i32 {val2}, {val1}\n"
+        LLVMGenerator.reg += 1 
+
+    @staticmethod
+    def sub_double(val1, val2):
+        LLVMGenerator.main_text += f"%{LLVMGenerator.reg} = fsub double {val2}, {val1}\n"
+        LLVMGenerator.reg += 1 
+
+    @staticmethod
     def mult_i32(val1, val2):
         LLVMGenerator.main_text += f"%{LLVMGenerator.reg} = mul i32 {val1}, {val2}\n"
         LLVMGenerator.reg += 1

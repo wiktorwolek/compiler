@@ -10,7 +10,7 @@ write: WRITE ID;
 
 read: READ ID;
 
-expression: expression1 | add;
+expression: expression1 | add | substract;
 
 expression1: expression2 | multiply | divide;
 
@@ -23,6 +23,8 @@ expression2:
 	| ID					# id;
 
 add: expression1 ADDOP expression;
+
+substract: expression1 SUBOP expression1;
 
 multiply: expression2 MULOP expression2;
 
@@ -47,6 +49,8 @@ DIVOP: '/';
 MULOP: '*';
 
 ADDOP: '+';
+
+SUBOP: '-';
 
 NEWLINE: '\r'? '\n';
 
