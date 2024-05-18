@@ -90,6 +90,8 @@ class LLVMActions(ExprListener):
         self.localnames = []
         self.functions = []
         self.function = ""
+
+
     def exitAssign(self, ctx):
         ID = ctx.ID().getText()
         v = self.stack.pop()
@@ -152,6 +154,28 @@ class LLVMActions(ExprListener):
                 self.stack.append(Value("%" + str(LLVMGenerator.tmp - 1), VarType.REAL))
         else:
             self.error(ctx.start.line, "mult type mismatch")
+
+    def exitDivide(self, ctx: ExprParser.DivideContext):
+        v1 = self.stack.pop()
+        v2 = self.stack.pop()
+
+        if v2.type == VarType.REAL and v1.type == VarType.INT:
+            LLVMGenerator.sitofp(v1.name)
+            self.stack.append(Value("%" + str(LLVMGenerator.tmp - 1), VarType.REAL))
+            v1 = self.stack.pop()
+        if v2.type == VarType.INT and v1.type == VarType.REAL:
+            LLVMGenerator.sitofp(v2.name)
+            self.stack.append(Value("%" + str(LLVMGenerator.tmp - 1), VarType.REAL))
+            v2 = self.stack.pop()
+
+        if v1.type == v2.type:
+            if v1.type == VarType.INT:
+                LLVMGenerator.div_i32(v2.name, v1.name)
+                self.stack.append(Value("%" + str(LLVMGenerator.tmp - 1), VarType.REAL))
+        else:
+            self.error(ctx.start.line, "mult type mismatch")
+
+
 
     def exitToint(self, ctx):
         v = self.stack.pop()

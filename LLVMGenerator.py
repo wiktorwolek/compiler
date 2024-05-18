@@ -80,6 +80,18 @@ class LLVMGenerator:
         LLVMGenerator.tmp += 1
 
     @staticmethod
+    def div_i32(val1, val2):
+        # %11 = sdiv i32 %9, %10
+        LLVMGenerator.main_text += f"%{LLVMGenerator.tmp} = sdiv i32 {val1}, {val2}\n"
+        LLVMGenerator.tmp += 1
+
+    @staticmethod
+    def div_double(val1, val2):
+        # %10 = fdiv float %8, %9
+        LLVMGenerator.main_text += f"%{LLVMGenerator.tmp} = fdiv double {val1}, {val2}\n"
+        LLVMGenerator.tmp += 1
+
+    @staticmethod
     def mult_double(val1, val2):
         LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = fmul double {val1}, {val2}\n"
         LLVMGenerator.tmp += 1
@@ -88,6 +100,7 @@ class LLVMGenerator:
     def sitofp(id):
         LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = sitofp i32 {id} to double\n"
         LLVMGenerator.tmp += 1
+
 
     @staticmethod
     def fptosi(id):
@@ -109,10 +122,10 @@ class LLVMGenerator:
       text = ""
       text += "declare i32 @printf(i8*, ...)\n"
       text += "declare i32 @__isoc99_scanf(i8*, ...)\n"
-      text += "@strp = constant [4 x i8] c\"%d\\0A\\00\"\n"
+      text += "@strp  = constant [4 x i8] c\"%d\\0A\\00\"\n"
       text += "@strpi = constant [4 x i8] c\"%d\\0A\\00\"\n";
       text += "@strpd = constant [4 x i8] c\"%f\\0A\\00\"\n";
-      text += "@strs = constant [3 x i8] c\"%d\\00\"\n"
+      text += "@strs  = constant [3 x i8] c\"%d\\00\"\n"
       text += LLVMGenerator.header_text
       text += "define i32 @main() nounwind{\n"
       text += LLVMGenerator.main_text

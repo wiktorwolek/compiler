@@ -20,7 +20,7 @@ read: READ ID;
 
 expression: expression1 | add;
 
-expression1: expression2 | multiply;
+expression1: expression2 | multiply | divide;
 
 expression2:
 	INT						# int
@@ -76,11 +76,11 @@ INT: '0' ..'9'+;
 
 REAL: '0' ..'9'+ '.' '0' ..'9'+;
 
-ADDOP: '+';
+DIVOP: '/';
 
 MULOP: '*';
 
-DIVOP: '/';
+ADDOP: '+';
 
 NEWLINE: '\r'? '\n';
 
