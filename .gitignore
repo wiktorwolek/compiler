@@ -10,6 +10,8 @@ __pycache__/
 Expr.interp
 Expr.tokens
 ExprLexer.py
+ExprLexer.interp
+ExprListener.py
 ExprLexer.tokens
 ExprParser.py
 *.c 
