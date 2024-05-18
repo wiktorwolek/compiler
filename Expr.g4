@@ -1,10 +1,18 @@
 grammar Expr;
 
-prog: ( statement? NEWLINE)* '<EOF>';
+prog: ( (statement|function)? NEWLINE)* '<EOF>';
 
-statement: write | assign | read;
+statement: write #write1| assign #assign1| read #read1| assigntable #assigntable1;
 
 assign: ID '=' expression;
+
+assigntable: ID '=' newtable;
+
+newtable: '[' (tablerow';')* ']';
+
+tablerow: (tableitem',')*;
+
+tableitem: expression;
 
 write: WRITE ID;
 
@@ -20,13 +28,39 @@ expression2:
 	| TOINT expression2		# toint
 	| TOREAL expression2	# toreal
 	| '(' expression ')'	# par
-	| ID					# id;
+	| id					# ids
+	| CALL ID '(' ')' #call;
+
+id: ID
+	| table;
+	
+table: ID '[' indexes ']' | ID '[' indexes ',' indexes ']';
+
+indexes: expression;
 
 add: expression1 ADDOP expression;
 
 multiply: expression2 MULOP expression2;
 
 divide: expression2 DIVOP expression2;
+
+function: FUNCTION fparam fblock ENDFUNCTION
+;
+fparam: ID
+;
+
+fblock: ( statement? NEWLINE )* 
+; 
+
+CALL: 'call'
+;
+
+FUNCTION: 'function'
+;
+
+ENDFUNCTION:	'endfunction'
+;
+
 
 WRITE: 'write';
 

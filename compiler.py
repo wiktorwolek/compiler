@@ -21,19 +21,15 @@ def main(args):
         # Step 4: Create an instance of the AssignmentStParser
         parser = ExprParser(tokens)
 
-        # Step 5: Create parse tree
-        tree = parser.prog()
-        print(tree.toStringTree(recog=parser))
-        walker = ParseTreeWalker()
-        try:
-            walker.walk(LLVMActions(), tree)
-        except:
-            print(LLVMGenerator().generate())
-            print(":(")
-
-    else:
-        print("Not enough arguments")
-
-
+    # Step 5: Create parse tree
+    tree = parser.prog()
+    print(tree.toStringTree(recog=parser))
+    walker = ParseTreeWalker()
+    try:
+        walker.walk(LLVMActions(), tree)
+    except:
+         print(LLVMGenerator().generate())
+         print(LLVMGenerator.buffer)
+         print(":(")
 if __name__ == '__main__':
     main(sys.argv)

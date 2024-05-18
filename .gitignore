@@ -9,7 +9,18 @@ __pycache__/*
 
 # C extensions
 *.so
-
+.antlr
+*.out
+*.exe
+Expr.interp
+Expr.tokens
+ExprLexer.py
+ExprLexer.interp
+ExprListener.py
+ExprLexer.tokens
+ExprParser.py
+*.c 
+*.ll
 # Distribution / packaging
 bin/
 build/
