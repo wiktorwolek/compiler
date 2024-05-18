@@ -64,7 +64,7 @@ def LoadOrCall(ID, object,ctx):
         LLVMGenerator.call(ID)
         object.stack.append(Value('%'+str(LLVMGenerator.tmp-1),VarType.INT))
     else:
-        LLVMActions.error(ctx.getStart().getLine(),"Unknown "+ID+ ": local > global > function")
+        LLVMActions.error(ctx.start.line,"Unknown "+ID+ ": local > global > function")
     return id
 def GetV(ID, object,ctx):
     print(object.globalnames)
@@ -77,7 +77,7 @@ def GetV(ID, object,ctx):
     elif len(list(filter(lambda x: x==ID,object.functions))) > 0:
         id = ID
     else:
-        LLVMActions.error(ctx.getStart().getLine(),"Unknown "+ID+ ": local > global > function")
+        LLVMActions.error(ctx.start.line,"Unknown "+ID+ ": local > global > function")
     return v
 
 class LLVMActions(ExprListener):
@@ -138,7 +138,7 @@ class LLVMActions(ExprListener):
                 LLVMGenerator.add_double(v1.name, v2.name)
                 self.stack.append(Value("%" + str(LLVMGenerator.tmp - 1), VarType.REAL))
         else:
-            self.error(ctx.getStart().getLine(), "add type mismatch")
+            self.error(ctx.start.line, "add type mismatch")
 
     def exitMultiply(self, ctx):
         v1 = self.stack.pop()
@@ -151,7 +151,7 @@ class LLVMActions(ExprListener):
                 LLVMGenerator.mult_double(v1.name, v2.name)
                 self.stack.append(Value("%" + str(LLVMGenerator.tmp - 1), VarType.REAL))
         else:
-            self.error(ctx.getStart().getLine(), "mult type mismatch")
+            self.error(ctx.start.line, "mult type mismatch")
 
     def exitToint(self, ctx):
         v = self.stack.pop()
@@ -163,9 +163,6 @@ class LLVMActions(ExprListener):
         LLVMGenerator.sitofp(v.name)
         self.stack.append(Value("%" + str(LLVMGenerator.tmp - 1), VarType.REAL))
 
-    def error(self, line, msg):
-        print("Error, line " + str(line) + ", " + msg)
-        exit(1)
     def exitCall(self,ctx:ExprParser.CallContext):
         LLVMGenerator.call(ctx.ID().getText())
         self.stack.append(Value('%'+str(LLVMGenerator.tmp-1),VarType.INT))
