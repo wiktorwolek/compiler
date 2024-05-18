@@ -113,7 +113,7 @@ class LLVMActions(ExprListener):
         if v1.type == v2.type:
             if v1.type == VarType.INT:
                 LLVMGenerator.div_i32(v2.name, v1.name)
-                self.stack.append(Value("%" + str(LLVMGenerator.reg - 1), VarType.REAL))
+                self.stack.append(Value("%" + str(LLVMGenerator.reg - 1), VarType.INT))
             else:
                 LLVMGenerator.div_double(v2.name, v1.name)
                 self.stack.append(Value("%" + str(LLVMGenerator.reg - 1), VarType.REAL))
