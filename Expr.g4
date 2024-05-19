@@ -1,16 +1,20 @@
 grammar Expr;
 
-prog: ( (statement|function)? NEWLINE)* '<EOF>';
+prog: ( (statement | function)? NEWLINE)* '<EOF>';
 
-statement: write #write1| assign #assign1| read #read1| assigntable #assigntable1;
+statement:
+	write			# write1
+	| assign		# assign1
+	| read			# read1
+	| assigntable	# assigntable1;
 
 assign: ID '=' expression;
 
 assigntable: ID '=' newtable;
 
-newtable: '[' (tablerow';')* ']';
+newtable: '[' (tablerow ';')* ']';
 
-tablerow: (tableitem',')*;
+tablerow: (tableitem ',')*;
 
 tableitem: expression;
 
@@ -25,15 +29,15 @@ expression1: expression2 | multiply | divide;
 expression2:
 	INT						# int
 	| REAL					# real
+	| STRING				# string
 	| TOINT expression2		# toint
 	| TOREAL expression2	# toreal
 	| '(' expression ')'	# par
 	| id					# ids
-	| CALL ID '(' ')' #call;
+	| CALL ID '(' ')'		# call;
 
-id: ID
-	| table;
-	
+id: ID | table;
+
 table: ID '[' indexes ']' | ID '[' indexes ',' indexes ']';
 
 indexes: expression;
@@ -44,23 +48,16 @@ multiply: expression2 MULOP expression2;
 
 divide: expression2 DIVOP expression2;
 
-function: FUNCTION fparam fblock ENDFUNCTION
-;
-fparam: ID
-;
+function: FUNCTION fparam fblock ENDFUNCTION;
+fparam: ID;
 
-fblock: ( statement? NEWLINE )* 
-; 
+fblock: ( statement? NEWLINE)*;
 
-CALL: 'call'
-;
+CALL: 'call';
 
-FUNCTION: 'function'
-;
+FUNCTION: 'function';
 
-ENDFUNCTION:	'endfunction'
-;
-
+ENDFUNCTION: 'endfunction';
 
 WRITE: 'write';
 
@@ -75,6 +72,20 @@ ID: ('a' ..'z' | 'A' ..'Z')+;
 INT: '0' ..'9'+;
 
 REAL: '0' ..'9'+ '.' '0' ..'9'+;
+
+STRING: '"' [a-zA-Z0-9]* '"';
+
+// STRING: '"' (ESC | ~["\\])* '"';
+
+// ESC: '\\' (["\\/ntrbf] | UNICODE);
+
+// UNICODE: 'u' HEX HEX HEX HEX;
+
+// HEX: [0-9a-fA-F];
+
+// NUMBER: DIGIT+;
+
+// DIGIT: [0-9];
 
 DIVOP: '/';
 
