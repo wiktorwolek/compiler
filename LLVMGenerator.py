@@ -3,9 +3,12 @@ class LLVMGenerator:
     main_text = ""
     main_tmp = 1
     buffer = ""
-    tmp = 1
     str_counter = 1
+    tmp = 1
+    br = 0
+    bstack = []
 
+    
     @staticmethod
     def function_start(id):
         LLVMGenerator.main_text += LLVMGenerator.buffer
@@ -91,13 +94,13 @@ class LLVMGenerator:
     @staticmethod
     def div_i32(val1, val2):
         # %11 = sdiv i32 %9, %10
-        LLVMGenerator.main_text += f"%{LLVMGenerator.tmp} = sdiv i32 {val1}, {val2}\n"
+        LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = sdiv i32 {val1}, {val2}\n"
         LLVMGenerator.tmp += 1
 
     @staticmethod
     def div_double(val1, val2):
         # %10 = fdiv float %8, %9
-        LLVMGenerator.main_text += f"%{LLVMGenerator.tmp} = fdiv double {val1}, {val2}\n"
+        LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = fdiv double {val1}, {val2}\n"
         LLVMGenerator.tmp += 1
 
     @staticmethod
@@ -159,6 +162,60 @@ class LLVMGenerator:
     @staticmethod
     def close_main():
         LLVMGenerator.main_text += LLVMGenerator.buffer
+    @staticmethod
+    def create_table(id, size, is_global):
+        if(is_global):
+            LLVMGenerator.header_text += "@"+str(id)+" = global [2 x [2 x i32]] zeroinitializer\n"
+            return "@"+str(id)
+        else:
+            LLVMGenerator.buffer += "%"+str(id)+" = alloca i32\n"
+            return "%"+str(id)
+    @staticmethod
+    def get_table_element(id, size,index):
+        LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = getelementptr inbounds {size}, ptr {id}, i64 0, i64 {index}\n";
+        LLVMGenerator.tmp += 1
+        return "%"+str(LLVMGenerator.tmp - 1);
+    @staticmethod
+    def repeatstart(repetitions):
+        LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = alloca i32\n";
+        counter = LLVMGenerator.tmp
+        LLVMGenerator.tmp+=1
+        LLVMGenerator.buffer += "store i32 "+"0"+", i32* %"+str(counter)+"\n";
+        LLVMGenerator.br += 1
+        LLVMGenerator.buffer += f"br label %cond"+str(LLVMGenerator.br)+"\n"
+        LLVMGenerator.buffer += f"cond{str(LLVMGenerator.br)}:\n"
+        LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = load i32, i32* %"+str(counter)+"\n"
+        LLVMGenerator.tmp+=1
+        LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = add i32 %"+str(LLVMGenerator.tmp-1)+", "+"1"+"\n";
+        LLVMGenerator.tmp += 1
+        LLVMGenerator.buffer += "store i32 %"+str(LLVMGenerator.tmp-1)+", i32* %"+str(counter)+"\n";
+        LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = icmp slt i32 %"+str(LLVMGenerator.tmp-2)+", "+repetitions+"\n";
+        LLVMGenerator.tmp += 1
+        LLVMGenerator.buffer += "br i1 %"+str(LLVMGenerator.tmp-1)+", label %true"+str(LLVMGenerator.br)+", label %false"+str(LLVMGenerator.br)+"\n";
+        LLVMGenerator.buffer += "true" + str(LLVMGenerator.br)+":\n"
+        LLVMGenerator.bstack.append(LLVMGenerator.br)
+    @staticmethod
+    def repeatend():
+        b = LLVMGenerator.bstack.pop()
+        LLVMGenerator.buffer += "br label %cond"+str(b)+"\n"
+        LLVMGenerator.buffer += "false"+str(b)+":\n";
+    @staticmethod
+    def ifstart():
+        LLVMGenerator.br += 1
+        LLVMGenerator.buffer += "br i1 %"+str(LLVMGenerator.tmp-1)+", label %true"+str(LLVMGenerator.br)+", label %false"+str(LLVMGenerator.br)+"\n";
+        LLVMGenerator.buffer += "true"+str(LLVMGenerator.br)+":\n";
+        LLVMGenerator.bstack.append(LLVMGenerator.br)
+    @staticmethod
+    def ifend():
+        b = LLVMGenerator.bstack.pop()
+        LLVMGenerator.buffer += "br label %false"+str(b)+"\n";
+        LLVMGenerator.buffer += "false"+str(b)+":\n";
+    @staticmethod
+    def icmp(id,val):
+        LLVMGenerator.buffer +="%"+str(LLVMGenerator.tmp)+" = load i32, i32* "+str(id)+"\n";
+        LLVMGenerator.tmp += 1
+        LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = icmp eq i32 %"+str(LLVMGenerator.tmp-1)+", "+val+"\n";
+        LLVMGenerator.tmp += 1
     @staticmethod
     def generate():
       text = ""
