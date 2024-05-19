@@ -8,9 +8,9 @@ assign: ID '=' expression;
 
 assigntable: ID '=' newtable;
 
-newtable: '[' (tablerow';')* ']';
+newtable: '{' (tablerow';')* tablerow'}';
 
-tablerow: (tableitem',')*;
+tablerow: (tableitem',')* tableitem;
 
 tableitem: expression;
 
@@ -29,10 +29,11 @@ expression2:
 	| TOREAL expression2	# toreal
 	| '(' expression ')'	# par
 	| id					# ids
-	| CALL ID '(' ')' #call;
+	| CALL ID '(' ')' #call
+	| table #tables;
 
-id: ID
-	| table;
+id: ID;
+	
 	
 table: ID '[' indexes ']' | ID '[' indexes ',' indexes ']';
 

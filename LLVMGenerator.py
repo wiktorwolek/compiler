@@ -82,13 +82,13 @@ class LLVMGenerator:
     @staticmethod
     def div_i32(val1, val2):
         # %11 = sdiv i32 %9, %10
-        LLVMGenerator.main_text += f"%{LLVMGenerator.tmp} = sdiv i32 {val1}, {val2}\n"
+        LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = sdiv i32 {val1}, {val2}\n"
         LLVMGenerator.tmp += 1
 
     @staticmethod
     def div_double(val1, val2):
         # %10 = fdiv float %8, %9
-        LLVMGenerator.main_text += f"%{LLVMGenerator.tmp} = fdiv double {val1}, {val2}\n"
+        LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = fdiv double {val1}, {val2}\n"
         LLVMGenerator.tmp += 1
 
     @staticmethod
@@ -117,6 +117,19 @@ class LLVMGenerator:
     @staticmethod
     def close_main():
         LLVMGenerator.main_text += LLVMGenerator.buffer;
+    @staticmethod
+    def create_table(id, size, is_global):
+        if(is_global):
+            LLVMGenerator.header_text += "@"+str(id)+" = global [2 x [2 x i32]] zeroinitializer\n"
+            return "@"+str(id)
+        else:
+            LLVMGenerator.buffer += "%"+str(id)+" = alloca i32\n"
+            return "%"+str(id)
+    @staticmethod
+    def get_table_element(id, size,index):
+        LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = getelementptr inbounds {size}, ptr {id}, i64 0, i64 {index}\n";
+        LLVMGenerator.tmp += 1
+        return "%"+str(LLVMGenerator.tmp - 1);
     @staticmethod
     def generate():
       text = ""

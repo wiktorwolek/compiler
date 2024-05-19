@@ -10,10 +10,12 @@ from collections import namedtuple
 class VarType(Enum):
     INT = 1
     REAL = 2
+    TABLE = 4
     UNKNOWN = 3
 
 # Define Value namedtuple to represent variables
 Value = namedtuple('Value', ['name', 'type'])
+Table = namedtuple('Table',['name','i','j'])
 def check_element(arr, v):
     return arr.count(v)
 def set_variable(ID,type,object):
@@ -37,6 +39,10 @@ def declareValue(ID,type,object):
         elif type == VarType.REAL:
             v = Value(ID,VarType.REAL)
             LLVMGenerator.declare_double(ID,object.is_global)
+        elif type == VarType.TABLE:
+            v = Value(ID,VarType.TABLE)
+            LLVMGenerator.create_table(ID,object.table_size,object.is_global)
+            object.tableSizes.append(Table(ID,len(object.tableItems),len(object.tableItems[0])))
         return v
 def assignValue(ID,v):
         if v.type == VarType.INT:
@@ -67,7 +73,6 @@ def LoadOrCall(ID, object,ctx):
         LLVMActions.error(ctx.start.line,"Unknown "+ID+ ": local > global > function")
     return id
 def GetV(ID, object,ctx):
-    print(object.globalnames)
     if  len(list(filter(lambda x: x.name==ID,object.localnames))) > 0:
         v = list(filter(lambda x: x.name==ID,object.localnames))[0]
         id = "%"+v.name
@@ -90,7 +95,7 @@ class LLVMActions(ExprListener):
         self.localnames = []
         self.functions = []
         self.function = ""
-
+        self.tableSizes = []
 
     def exitAssign(self, ctx):
         ID = ctx.ID().getText()
@@ -171,6 +176,9 @@ class LLVMActions(ExprListener):
         if v1.type == v2.type:
             if v1.type == VarType.INT:
                 LLVMGenerator.div_i32(v2.name, v1.name)
+                self.stack.append(Value("%" + str(LLVMGenerator.tmp - 1), VarType.INT))
+            if v1.type == VarType.REAL:
+                LLVMGenerator.div_i32(v2.name, v1.name)
                 self.stack.append(Value("%" + str(LLVMGenerator.tmp - 1), VarType.REAL))
         else:
             self.error(ctx.start.line, "mult type mismatch")
@@ -190,6 +198,12 @@ class LLVMActions(ExprListener):
     def exitCall(self,ctx:ExprParser.CallContext):
         LLVMGenerator.call(ctx.ID().getText())
         self.stack.append(Value('%'+str(LLVMGenerator.tmp-1),VarType.INT))
+
+    def exitRead(self, ctx:ExprParser.ReadContext):
+        ID = ctx.ID().getText()
+        assignValue(set_variable(ID,VarType.INT,self),Value('%'+str(LLVMGenerator.tmp-1),VarType.INT))
+        LLVMGenerator.scanf(ID)
+
     def exitWrite(self, ctx:ExprParser.WriteContext):
         ID = ctx.ID().getText()
         v = GetV(ID,self,ctx)
@@ -206,19 +220,36 @@ class LLVMActions(ExprListener):
         v = self.stack.pop()
         self.tableItems[-1].append(v)
     def exitAssigntable(self, ctx: ExprParser.AssigntableContext):
-        print(self.tableItems)
+        print(self.tableItems) 
+        tableName = ctx.ID().getText()
+        del self.tableItems[-1]
+        if len(self.tableItems)==1:
+            size = f"[{len(self.tableItems[0])} x i64]"
+            
+        else:
+            size = f"[{len(self.tableItems)} x [{len(self.tableItems[0])} x i64]]"
+        self.table_size = size 
+        tableName = set_variable(tableName,VarType.TABLE,self)
+       # name = LLVMGenerator.get_table_element(tableName,size)
         for i in range(0, len(self.tableItems)):
+            if len(self.tableItems)!=1:
+                name = LLVMGenerator.get_table_element(tableName,size,str(i))
+            else:
+                name = tableName
             for j in range(0, len(self.tableItems[i])):
-                name = str(ctx.ID()) + "_" + str(i) + '_' + str(j)
-                assignValue(set_variable(name,self.tableItems[i][j].type,self), self.tableItems[i][j]);
-        self.tableName = ctx.ID().getText()
+                varName = LLVMGenerator.get_table_element(name,f"[{len(self.tableItems[i][j])} x i64]",str(j))
+                assignValue(varName, self.tableItems[i][j]);
+       
         self.tableItems = [[]]
     def exitTable(self, ctx: ExprParser.TableContext):
         print(self.tableIndexes)
-        name = str(ctx.ID())
-        for i in self.tableIndexes:
-            name += '_' + str(i)
-        loadValue(LoadOrCall(name,object,ctx),self)
+        name = set_variable(GetV(str(ctx.ID()),self,ctx).name,VarType.TABLE,self)
+        table = list(filter(lambda x: x.name==GetV(str(ctx.ID()),self,ctx).name,self.tableSizes))[0]
+        if self.tableIndexes != 1:
+            name = LLVMGenerator.get_table_element(name,f"[{table.i} x [{table.j} x i64]]",str(self.tableIndexes[0].name))
+            del self.tableIndexes[0]
+        varName =  LLVMGenerator.get_table_element(name,f"[{table.j} x i64]",self.tableIndexes[0].name)
+        loadValue(Value(varName,VarType.INT),self)
         self.tableIndexes = []
     def exitIndexes(self, ctx: ExprParser.IndexesContext):
         v = self.stack.pop()
