@@ -251,6 +251,7 @@ class LLVMActions(ExprListener):
         varName =  LLVMGenerator.get_table_element(name,f"[{table.j} x i64]",self.tableIndexes[0].name)
         loadValue(Value(varName,VarType.INT),self)
         self.tableIndexes = []
+        self.tableValue = self.stack[-1]
     def exitIndexes(self, ctx: ExprParser.IndexesContext):
         v = self.stack.pop()
         self.tableIndexes.append(v)
