@@ -1,9 +1,19 @@
 grammar Expr;
 
-prog: ( (statement|function)? NEWLINE)* '<EOF>';
+prog:  block '<EOF>';
 
-statement: write #write1| assign #assign1| read #read1| assigntable #assigntable1;
+block: ((statement|function)? NEWLINE)*;
 
+statement: write #write1| assign #assign1| read #read1| assigntable #assigntable1|IF equal THEN blockif ENDIF #if|REPEAT repetitions blockrep ENDREPEAT#loop;
+
+equal: ID '==' expression
+;
+blockif: block
+;
+blockrep: block
+;
+repetitions: expression
+;
 assign: ID '=' expression;
 
 assigntable: ID '=' newtable;
@@ -52,6 +62,21 @@ fparam: ID
 
 fblock: ( statement? NEWLINE )* 
 ; 
+
+REPEAT: 'repeat'
+;
+
+ENDREPEAT: 'endrepeat'
+;
+
+IF:	'if'
+;
+
+THEN:	'then'
+;
+
+ENDIF:	'endif'
+;
 
 CALL: 'call'
 ;

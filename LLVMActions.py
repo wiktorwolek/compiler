@@ -255,6 +255,22 @@ class LLVMActions(ExprListener):
     def exitIndexes(self, ctx: ExprParser.IndexesContext):
         v = self.stack.pop()
         self.tableIndexes.append(v)
+    def exitRepetitions(self, ctx: ExprParser.RepetitionsContext ):
+        v = self.stack.pop()
+        if v.type != VarType.INT:
+            self.error(ctx.start.line, "repeticions are not int")
+        LLVMGenerator.repeatstart(v.name);
+    def exitBlockrep(self, ctx:ExprParser.BlockrepContext):
+        LLVMGenerator.repeatend()
+    def enterBlockif(self,ctx:ExprParser.BlockifContext):
+        LLVMGenerator.ifstart()
+    def exitBlockif(self, ctx: ExprParser.BlockifContext):
+        LLVMGenerator.ifend()
+    def exitEqual(self,ctx:ExprParser.EqualContext):
+        ID = ctx.ID().getText()
+        INT = self.stack.pop()
+        v  = set_variable(ID,VarType.INT,self)
+        LLVMGenerator.icmp(v,INT.name)
     def error(self, line, msg):
         print("Error, line " + str(line) + ", " + msg)
         exit(1)
