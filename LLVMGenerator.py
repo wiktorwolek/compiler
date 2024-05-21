@@ -55,7 +55,7 @@ class LLVMGenerator:
     @staticmethod
     def declare_double(id,is_global):
         if(is_global):
-            LLVMGenerator.header_text += "@"+str(id)+" = global double 0\n"
+            LLVMGenerator.header_text += "@"+str(id)+" = global double 0.0\n"
         else:
             LLVMGenerator.buffer += "%"+str(id)+" = alloca double\n"
 
