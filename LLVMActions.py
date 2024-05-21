@@ -199,10 +199,10 @@ class LLVMActions(ExprListener):
                 LLVMGenerator.div_i32(v2.name, v1.name)
                 self.stack.append(Value("%" + str(LLVMGenerator.tmp - 1), VarType.INT, 0))
             if v1.type == VarType.REAL:
-                LLVMGenerator.div_i32(v2.name, v1.name)
+                LLVMGenerator.div_double(v2.name, v1.name)
                 self.stack.append(Value("%" + str(LLVMGenerator.tmp - 1), VarType.REAL, 0))
         else:
-            self.error(ctx.start.line, "mult type mismatch")
+            self.error(ctx.start.line, "div type mismatch")
 
 
 
