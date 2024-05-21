@@ -27,6 +27,14 @@
             "program": "compiler.py",
             "console": "integratedTerminal",
             "args": "tests/errors/index_out_of_scope.x"
+        },
+        {
+            "name": "Python: local table",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "compiler.py",
+            "console": "integratedTerminal",
+            "args": "tests/tables/local_table_int.x"
         }
     ]
 }

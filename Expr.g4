@@ -16,7 +16,12 @@ equal: ID '==' expression;
 blockif: block;
 blockrep: block;
 repetitions: expression;
-assign: ID '=' expression;
+
+assign: idToken '=' expression;
+
+idToken: id | table;
+
+id: ID;
 
 assigntable: ID '=' newtable;
 
@@ -41,11 +46,8 @@ expression2:
 	| TOINT expression2		# toint
 	| TOREAL expression2	# toreal
 	| '(' expression ')'	# par
-	| id					# ids
-	| CALL ID '(' ')'		# call
-	| table					# tables;
-
-id: ID;
+	| idToken				# ids
+	| CALL ID '(' ')'		# call;
 
 table: ID '[' indexes ']' | ID '[' indexes ',' indexes ']';
 

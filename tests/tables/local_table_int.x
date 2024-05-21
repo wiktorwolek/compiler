@@ -1,10 +1,14 @@
-function my_scope
+function myScope
+
     myArray = {12, 13, 14}
 
-    read elem
+    x = 1
 
-    myArray[1] = elem
-
-    write myArray
+    arrElem = myArray[1]
     
 endfunction
+
+
+something = call myScope()
+
+write something

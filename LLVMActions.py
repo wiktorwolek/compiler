@@ -63,8 +63,10 @@ def loadValue(v, object):
     if v.type == VarType.REAL:
         LLVMGenerator.load_double(v.name)
     object.stack.append(Value("%"+str(LLVMGenerator.tmp-1),v.type, 0))
+
 def LoadOrCall(ID, object,ctx):
     print(object.globalnames)
+    id = ID
     if  len(list(filter(lambda x: x.name==ID,object.localnames))) > 0:
         v = list(filter(lambda x: x.name==ID,object.localnames))[0]
         id = "%"+v.name
@@ -77,9 +79,10 @@ def LoadOrCall(ID, object,ctx):
         id = ID
         LLVMGenerator.call(ID)
         object.stack.append(Value('%'+str(LLVMGenerator.tmp-1),VarType.INT, 0))
-    else:
-        LLVMActions.error(ctx.start.line,"Unknown "+ID+ ": local > global > function")
+    # else:
+    #     LLVMActions.error(ctx.start.line,"Unknown "+ID+ ": local > global > function")
     return id
+
 def GetV(ID, object,ctx):
     if  len(list(filter(lambda x: x.name==ID,object.localnames))) > 0:
         v = list(filter(lambda x: x.name==ID,object.localnames))[0]
@@ -106,15 +109,23 @@ class LLVMActions(ExprListener):
         self.tableSizes = []
 
     def exitAssign(self, ctx):
-        ID = ctx.ID().getText()
         v = self.stack.pop()
-        assignValue(set_variable(ID,v.type,self),v)
+        ID = self.stack.pop().name
+
+        if ID[0] != "%":
+            ID = set_variable(ID, v.type, self)
+        
+        assignValue(ID,v)
 
 
     def exitId(self, ctx: ExprParser.IdContext):
-        ID = ctx.ID().getText()
-        LoadOrCall(ID,self,ctx)
-        print(self.stack)
+
+        if ctx.ID() != None:
+            ID = ctx.ID().getText()
+            id = LoadOrCall(ID,self,ctx)
+            self.stack.append(Value(id, VarType.INT, 0))
+            print(self.stack)
+
     def enterProg(self, ctx):
         self.is_global = True
     def exitProg(self, ctx):
@@ -130,13 +141,15 @@ class LLVMActions(ExprListener):
         LLVMGenerator.function_start(ID)
     def enterFblock(self,ctx:ExprParser.FblockContext):
         self.is_global = False
+
     def exitFblock(self,ctx:ExprParser.FblockContext):
         if len(list(filter(lambda x: x.name==self.function,self.localnames))) == 0:
           assignValue(set_variable(self.function,VarType.INT,self),Value("0",VarType.INT, 0))
         loadValue(Value("%"+self.function,VarType.INT, 0),self)
         LLVMGenerator.function_end()
         self.localnames = []
-        self.is_global = True   
+        self.is_global = True
+           
     def exitInt(self, ctx):
         self.stack.append(Value(ctx.INT().getText(), VarType.INT, 0))
 
@@ -271,11 +284,8 @@ class LLVMActions(ExprListener):
     def exitTable(self, ctx: ExprParser.TableContext):
         print(self.tableIndexes)
 
-
         name = set_variable(GetV(str(ctx.ID()),self,ctx).name,VarType.TABLE,self)
         table = list(filter(lambda x: x.name == GetV(str(ctx.ID()),self,ctx).name,self.tableSizes))[0]
-        
-        
 
         if len(self.tableIndexes) != 1:
             name = LLVMGenerator.get_table_element(name,f"[{table.i} x [{table.j} x i32]]",str(self.tableIndexes[0].name))

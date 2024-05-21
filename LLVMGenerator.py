@@ -169,7 +169,7 @@ class LLVMGenerator:
             LLVMGenerator.header_text += "@"+str(id)+" = global "+str(size)+" zeroinitializer\n"
             return "@"+str(id)
         else:
-            LLVMGenerator.buffer += "%"+str(id)+" = alloca i32\n"
+            LLVMGenerator.buffer += "%"+str(id)+" = alloca "+str(size)+"\n"
             return "%"+str(id)
     @staticmethod
     def get_table_element(id, size,index):
