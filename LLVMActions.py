@@ -44,7 +44,7 @@ def declareValue(ID,type,object):
             v = Value(ID,VarType.STRING, 0)
             LLVMGenerator.declare_string(ID,object.is_global) 
         elif type == VarType.TABLE:
-            v = Value(ID,VarType.TABLE)
+            v = Value(ID,VarType.TABLE, 0)
             LLVMGenerator.create_table(ID,object.table_size,object.is_global)
             object.tableSizes.append(Table(ID,len(object.tableItems),len(object.tableItems[0])))
         return v
@@ -222,7 +222,7 @@ class LLVMActions(ExprListener):
 
     def exitRead(self, ctx:ExprParser.ReadContext):
         ID = ctx.ID().getText()
-        assignValue(set_variable(ID,VarType.INT,self),Value('%'+str(LLVMGenerator.tmp-1),VarType.INT))
+        assignValue(set_variable(ID,VarType.INT,self),Value('%'+str(LLVMGenerator.tmp-1),VarType.INT, 0))
         LLVMGenerator.scanf(ID)
 
     def exitWrite(self, ctx:ExprParser.WriteContext):
@@ -273,7 +273,7 @@ class LLVMActions(ExprListener):
             name = LLVMGenerator.get_table_element(name,f"[{table.i} x [{table.j} x i64]]",str(self.tableIndexes[0].name))
             del self.tableIndexes[0]
         varName =  LLVMGenerator.get_table_element(name,f"[{table.j} x i64]",self.tableIndexes[0].name)
-        loadValue(Value(varName,VarType.INT),self)
+        loadValue(Value(varName,VarType.INT, 0),self)
         self.tableIndexes = []
         self.tableValue = self.stack[-1]
     def exitIndexes(self, ctx: ExprParser.IndexesContext):
