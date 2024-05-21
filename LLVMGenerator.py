@@ -130,10 +130,10 @@ class LLVMGenerator:
       num = "str"+str(LLVMGenerator.str_counter)
       LLVMGenerator.allocate_string(num, (length-1))
       LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = bitcast ["+str(length)+" x i8]* %"+num+" to i8*\n"
-      LLVMGenerator.buffer += "call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 1 %"+str(LLVMGenerator.tmp)+", i8* align 1 getelementptr inbounds (["+str(length)+" x i8], ["+str(length)+" x i8]* @"+num+", i32 0, i32 0), i64 "+str(length)+", i1 false)\n"
+      LLVMGenerator.buffer += "call void @llvm.memcpy.p0i8.p0i8.i32(i8* align 1 %"+str(LLVMGenerator.tmp)+", i8* align 1 getelementptr inbounds (["+str(length)+" x i8], ["+str(length)+" x i8]* @"+num+", i32 0, i32 0), i32 "+str(length)+", i1 false)\n"
       LLVMGenerator.tmp +=1
       LLVMGenerator.buffer += "%ptr"+num+" = alloca i8*\n"
-      LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = getelementptr inbounds ["+str(length)+" x i8], ["+str(length)+" x i8]* %"+num+", i64 0, i64 0\n"
+      LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = getelementptr inbounds ["+str(length)+" x i8], ["+str(length)+" x i8]* %"+num+", i32 0, i32 0\n"
       LLVMGenerator.tmp +=1
       LLVMGenerator.buffer += "store i8* %"+str(LLVMGenerator.tmp-1)+", i8** %ptr"+num+"\n";    
       LLVMGenerator.str_counter+=1
@@ -165,16 +165,17 @@ class LLVMGenerator:
     @staticmethod
     def create_table(id, size, is_global):
         if(is_global):
-            LLVMGenerator.header_text += "@"+str(id)+" = global [2 x [2 x i32]] zeroinitializer\n"
+            #   store i32 0, i32* getelementptr inbounds ([3 x i32], [3 x i32]* @table, i32 0, i32 0), align 4
+            LLVMGenerator.header_text += "@"+str(id)+" = global "+str(size)+" zeroinitializer\n"
             return "@"+str(id)
         else:
             LLVMGenerator.buffer += "%"+str(id)+" = alloca i32\n"
             return "%"+str(id)
     @staticmethod
     def get_table_element(id, size,index):
-        LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = getelementptr inbounds {size}, ptr {id}, i64 0, i64 {index}\n";
+        LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = getelementptr inbounds {size}, {size}* {id}, i32 0, i32 {index}\n"
         LLVMGenerator.tmp += 1
-        return "%"+str(LLVMGenerator.tmp - 1);
+        return "%"+str(LLVMGenerator.tmp - 1)
     @staticmethod
     def repeatstart(repetitions):
         LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = alloca i32\n";
@@ -221,7 +222,7 @@ class LLVMGenerator:
       text = ""
       text += "declare i32 @printf(i8*, ...)\n"
       text += "declare i32 @__isoc99_scanf(i8*, ...)\n"
-      text += "declare void @llvm.memcpy.p0i8.p0i8.i64(i8* noalias nocapture writeonly, i8* noalias nocapture readonly, i64, i1 immarg)\n"
+      text += "declare void @llvm.memcpy.p0i8.p0i8.i32(i8* noalias nocapture writeonly, i8* noalias nocapture readonly, i32, i1 immarg)\n"
       text += "@strp  = constant [4 x i8] c\"%d\\0A\\00\"\n"
       text += "@strpi = constant [4 x i8] c\"%d\\0A\\00\"\n"
       text += "@strpd = constant [4 x i8] c\"%f\\0A\\00\"\n"

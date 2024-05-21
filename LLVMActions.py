@@ -10,9 +10,9 @@ from collections import namedtuple
 class VarType(Enum):
     INT = 1
     REAL = 2
-    TABLE = 4
     UNKNOWN = 3
-    STRING = 4
+    TABLE = 4
+    STRING = 5
 
 # Define Value namedtuple to represent variables
 Value = namedtuple('Value', ['name', 'type', 'length'])
@@ -248,10 +248,10 @@ class LLVMActions(ExprListener):
         tableName = ctx.ID().getText()
         del self.tableItems[-1]
         if len(self.tableItems)==1:
-            size = f"[{len(self.tableItems[0])} x i64]"
+            size = f"[{len(self.tableItems[0])} x i32]"
             
         else:
-            size = f"[{len(self.tableItems)} x [{len(self.tableItems[0])} x i64]]"
+            size = f"[{len(self.tableItems)} x [{len(self.tableItems[0])} x i32]]"
         self.table_size = size 
         self.tableSizes.append(Table(tableName,len(self.tableItems),len(self.tableItems[0])))
         tableName = set_variable(tableName,VarType.TABLE,self)
@@ -262,21 +262,30 @@ class LLVMActions(ExprListener):
             else:
                 name = tableName
             for j in range(0, len(self.tableItems[i])):
-                varName = LLVMGenerator.get_table_element(name,f"[{len(self.tableItems[i][j])} x i64]",str(j))
-                assignValue(varName, self.tableItems[i][j]);
+                varName = LLVMGenerator.get_table_element(name,f"[{len(self.tableItems[i][j])} x i32]",str(j))
+                assignValue(varName, self.tableItems[i][j])
        
         self.tableItems = [[]]
+
+
     def exitTable(self, ctx: ExprParser.TableContext):
         print(self.tableIndexes)
+
+
         name = set_variable(GetV(str(ctx.ID()),self,ctx).name,VarType.TABLE,self)
         table = list(filter(lambda x: x.name == GetV(str(ctx.ID()),self,ctx).name,self.tableSizes))[0]
+        
+        
+
         if len(self.tableIndexes) != 1:
-            name = LLVMGenerator.get_table_element(name,f"[{table.i} x [{table.j} x i64]]",str(self.tableIndexes[0].name))
+            name = LLVMGenerator.get_table_element(name,f"[{table.i} x [{table.j} x i32]]",str(self.tableIndexes[0].name))
             del self.tableIndexes[0]
-        varName =  LLVMGenerator.get_table_element(name,f"[{table.j} x i64]",self.tableIndexes[0].name)
+        varName =  LLVMGenerator.get_table_element(name,f"[{table.j} x i32]",self.tableIndexes[0].name)
         loadValue(Value(varName,VarType.INT, 0),self)
         self.tableIndexes = []
         self.tableValue = self.stack[-1]
+
+
     def exitIndexes(self, ctx: ExprParser.IndexesContext):
         v = self.stack.pop()
         self.tableIndexes.append(v)
