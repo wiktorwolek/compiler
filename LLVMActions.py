@@ -270,7 +270,7 @@ class LLVMActions(ExprListener):
         print(self.tableIndexes)
         name = set_variable(GetV(str(ctx.ID()),self,ctx).name,VarType.TABLE,self)
         table = list(filter(lambda x: x.name == GetV(str(ctx.ID()),self,ctx).name,self.tableSizes))[0]
-        if self.tableIndexes != 1:
+        if len(self.tableIndexes) != 1:
             name = LLVMGenerator.get_table_element(name,f"[{table.i} x [{table.j} x i64]]",str(self.tableIndexes[0].name))
             del self.tableIndexes[0]
         varName =  LLVMGenerator.get_table_element(name,f"[{table.j} x i64]",self.tableIndexes[0].name)
