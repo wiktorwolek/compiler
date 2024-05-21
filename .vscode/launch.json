@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "compiler.py",
             "console": "integratedTerminal",
-            "args": "tests/global_string.x"
+            "args": "tests/declarations/global_string.x"
         },
         {
             "name": "Python: global real",
@@ -18,7 +18,15 @@
             "request": "launch",
             "program": "compiler.py",
             "console": "integratedTerminal",
-            "args": "tests/global_real.x"
+            "args": "tests/declarations/global_real.x"
+        },
+        {
+            "name": "Python: error out of scope",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "compiler.py",
+            "console": "integratedTerminal",
+            "args": "tests/errors/index_out_of_scope.x"
         }
     ]
 }

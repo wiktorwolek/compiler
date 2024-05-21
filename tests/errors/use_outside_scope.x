@@ -1,6 +1,5 @@
 function my_scope
-  read x
-  write x
+  x = 12
 endfunction
 
 z = x + 2
