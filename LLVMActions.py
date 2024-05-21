@@ -44,7 +44,7 @@ def declareValue(ID,type,object):
             v = Value(ID,VarType.STRING, 0)
             LLVMGenerator.declare_string(ID,object.is_global) 
         elif type == VarType.TABLE:
-            v = Value(ID,VarType.TABLE)
+            v = Value(ID,VarType.TABLE,0)
             LLVMGenerator.create_table(ID,object.table_size,object.is_global)
             object.tableSizes.append(Table(ID,len(object.tableItems),len(object.tableItems[0])))
         return v
@@ -253,6 +253,7 @@ class LLVMActions(ExprListener):
         else:
             size = f"[{len(self.tableItems)} x [{len(self.tableItems[0])} x i64]]"
         self.table_size = size 
+        self.tableSizes.append(Table(tableName,len(self.tableItems),len(self.tableItems[0])))
         tableName = set_variable(tableName,VarType.TABLE,self)
        # name = LLVMGenerator.get_table_element(tableName,size)
         for i in range(0, len(self.tableItems)):
@@ -268,12 +269,12 @@ class LLVMActions(ExprListener):
     def exitTable(self, ctx: ExprParser.TableContext):
         print(self.tableIndexes)
         name = set_variable(GetV(str(ctx.ID()),self,ctx).name,VarType.TABLE,self)
-        table = list(filter(lambda x: x.name==GetV(str(ctx.ID()),self,ctx).name,self.tableSizes))[0]
+        table = list(filter(lambda x: x.name == GetV(str(ctx.ID()),self,ctx).name,self.tableSizes))[0]
         if self.tableIndexes != 1:
             name = LLVMGenerator.get_table_element(name,f"[{table.i} x [{table.j} x i64]]",str(self.tableIndexes[0].name))
             del self.tableIndexes[0]
         varName =  LLVMGenerator.get_table_element(name,f"[{table.j} x i64]",self.tableIndexes[0].name)
-        loadValue(Value(varName,VarType.INT),self)
+        loadValue(Value(varName,VarType.INT,0),self)
         self.tableIndexes = []
         self.tableValue = self.stack[-1]
     def exitIndexes(self, ctx: ExprParser.IndexesContext):
