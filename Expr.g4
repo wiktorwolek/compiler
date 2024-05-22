@@ -17,11 +17,13 @@ blockif: block;
 blockrep: block;
 repetitions: expression;
 
-assign: idToken '=' expression;
+assign: assignableID '=' expression;
 
-idToken: id | table;
+assignableID: id | table;
 
 id: ID;
+
+idToken: ID | table;
 
 assigntable: ID '=' newtable;
 
@@ -31,7 +33,7 @@ tablerow: (tableitem ',')* tableitem;
 
 tableitem: expression;
 
-write: WRITE ID;
+write: WRITE idToken;
 
 read: READ ID;
 

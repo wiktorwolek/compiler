@@ -25,9 +25,9 @@ class LLVMGenerator:
     
     @staticmethod
     def printf_i32(id):
-        LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = load i32, i32* {id}\n"
-        LLVMGenerator.tmp += 1
-        LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strp, i32 0, i32 0), i32 %{LLVMGenerator.tmp - 1})\n"
+        #LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = load i32, i32* {id}\n"
+        #LLVMGenerator.tmp += 1
+        LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strp, i32 0, i32 0), i32 {id})\n"
         LLVMGenerator.tmp += 1
 
     @staticmethod

@@ -78,8 +78,8 @@ def LoadOrCall(ID, object,ctx):
         id = ID
         LLVMGenerator.call(ID)
         object.stack.append(Value('%'+str(LLVMGenerator.tmp-1),VarType.INT, 0))
-    # else:
-    #     LLVMActions.error(ctx.start.line,"Unknown "+ID+ ": local > global > function")
+    else:
+        object.error(ctx.start.line,"Unknown "+str(ID)+ ": local > global > function")
     return id
 
 def GetV(ID, object,ctx):
@@ -109,10 +109,10 @@ class LLVMActions(ExprListener):
 
     def exitAssign(self, ctx):
         v = self.stack.pop()
-        ID = self.stack.pop().name
-        f = ctx.children[0].children[0]
         if type(ctx.children[0].children[0]) is ExprParser.IdContext:
             ID = ctx.children[0].children[0].ID().getText();
+        else:
+            ID = self.stack.pop().name
         if ID[0] != '%':
             if ID[0]=='@':
                 ID = ID[1:]
@@ -121,14 +121,18 @@ class LLVMActions(ExprListener):
         assignValue(ID,v)
 
 
-    def exitId(self, ctx: ExprParser.IdContext):
+    def exitIdToken(self, ctx: ExprParser.IdTokenContext):
 
-        if ctx.ID() != None:
+        if hasattr(ctx,"ID") and callable(ctx.ID) and ctx.ID() != None:
+            a = ctx.ID()
             ID = ctx.ID().getText()
             id = LoadOrCall(ID,self,ctx)
-            if id =="":
+            if id == "":
                 self.stack.append(Value(ID, VarType.INT, 0))
             print(self.stack)
+        else:
+            v = self.stack.pop()
+            loadValue(v,self)
 
     def enterProg(self, ctx):
         self.is_global = True
@@ -244,9 +248,9 @@ class LLVMActions(ExprListener):
         LLVMGenerator.scanf(ID)
 
     def exitWrite(self, ctx:ExprParser.WriteContext):
-        ID = ctx.ID().getText()
-        v = GetV(ID,self,ctx)
-        ID = LoadOrCall(ID,self,ctx)
+        v = self.stack.pop()
+        ID = v.name
+        #ID = LoadOrCall(ID,self,ctx)
         if v.type == VarType.INT:
             LLVMGenerator.printf_i32(ID)
         elif v.type == VarType.REAL:
@@ -296,7 +300,8 @@ class LLVMActions(ExprListener):
             name = LLVMGenerator.get_table_element(name,f"[{table.i} x [{table.j} x i32]]",str(self.tableIndexes[0].name))
             del self.tableIndexes[0]
         varName =  LLVMGenerator.get_table_element(name,f"[{table.j} x i32]",self.tableIndexes[0].name)
-        loadValue(Value(varName,VarType.INT, 0),self)
+        #loadValue(Value(varName,VarType.INT, 0),self)
+        self.stack.append(Value(varName,VarType.INT, 0))
         self.tableIndexes = []
         self.tableValue = self.stack[-1]
 

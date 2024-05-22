@@ -1,4 +1,4 @@
-function my_scope
+function myScope
   x = 12
 endfunction
 
