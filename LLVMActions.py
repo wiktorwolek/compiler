@@ -65,8 +65,7 @@ def loadValue(v, object):
     object.stack.append(Value("%"+str(LLVMGenerator.tmp-1),v.type, 0))
 
 def LoadOrCall(ID, object,ctx):
-    print(object.globalnames)
-    id = ID
+    id = ""
     if  len(list(filter(lambda x: x.name==ID,object.localnames))) > 0:
         v = list(filter(lambda x: x.name==ID,object.localnames))[0]
         id = "%"+v.name
@@ -111,8 +110,12 @@ class LLVMActions(ExprListener):
     def exitAssign(self, ctx):
         v = self.stack.pop()
         ID = self.stack.pop().name
-
-        if ID[0] != "%":
+        f = ctx.children[0].children[0]
+        if type(ctx.children[0].children[0]) is ExprParser.IdContext:
+            ID = ctx.children[0].children[0].ID().getText();
+        if ID[0] != '%':
+            if ID[0]=='@':
+                ID = ID[1:]
             ID = set_variable(ID, v.type, self)
         
         assignValue(ID,v)
@@ -123,7 +126,8 @@ class LLVMActions(ExprListener):
         if ctx.ID() != None:
             ID = ctx.ID().getText()
             id = LoadOrCall(ID,self,ctx)
-            self.stack.append(Value(id, VarType.INT, 0))
+            if id =="":
+                self.stack.append(Value(ID, VarType.INT, 0))
             print(self.stack)
 
     def enterProg(self, ctx):
@@ -141,6 +145,7 @@ class LLVMActions(ExprListener):
         LLVMGenerator.function_start(ID)
     def enterFblock(self,ctx:ExprParser.FblockContext):
         self.is_global = False
+        set_variable(self.function,VarType.INT,self)
 
     def exitFblock(self,ctx:ExprParser.FblockContext):
         if len(list(filter(lambda x: x.name==self.function,self.localnames))) == 0:

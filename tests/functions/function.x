@@ -1,13 +1,12 @@
 x = 1
 function fun
   write x
-  x = 3 / 3 
-  write x
-  fun = x
+  x = 1
+  fun = x + 1
 endfunction
 
 
-zosia = fun
+zosia = call fun()
 write zosia
 
 ala = 1
@@ -18,7 +17,7 @@ function alax
   alax = 15
 endfunction
 
-x= alax
+x = call alax()
 
 write ala
 

@@ -6,6 +6,7 @@ function myScope
 
     arrElem = myArray[1]
     
+    myScope = arrElem
 endfunction
 
 
