@@ -1,5 +1,5 @@
 read a
-read b
+read int b
 read c
 
 z = a+b+c

@@ -152,8 +152,12 @@ class LLVMGenerator:
         LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = fptosi double {id} to i32\n"
         LLVMGenerator.tmp += 1
     @staticmethod
-    def scanf(id):
+    def scanf_i32(id):
       LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @strs, i32 0, i32 0), i32* {id})\n"
+      LLVMGenerator.tmp += 1
+    def scanf_double(id):
+    #   %7 = call i32 (i8*, ...) @__isoc99_scanf(i8* noundef getelementptr inbounds ([5 x i8], [5 x i8]* @.str, i64 0, i64 0), double* noundef %6)
+      LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strsd, i64 0, i64 0), double* {id})\n"
       LLVMGenerator.tmp += 1
     @staticmethod
     def call(id):
@@ -219,6 +223,7 @@ class LLVMGenerator:
         LLVMGenerator.tmp += 1
     @staticmethod
     def generate():
+    
       text = ""
       text += "declare i32 @printf(i8*, ...)\n"
       text += "declare i32 @__isoc99_scanf(i8*, ...)\n"
@@ -226,6 +231,7 @@ class LLVMGenerator:
       text += "@strp  = constant [4 x i8] c\"%d\\0A\\00\"\n"
       text += "@strpi = constant [4 x i8] c\"%d\\0A\\00\"\n"
       text += "@strpd = constant [4 x i8] c\"%f\\0A\\00\"\n"
+      text += "@strsd = constant [4 x i8] c\"%lf\\00\"\n"
       text += "@strs  = constant [3 x i8] c\"%d\\00\"\n"
       text += "@strps = constant [4 x i8] c\"%s\\0A\\00\"\n"
       text += LLVMGenerator.header_text

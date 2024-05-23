@@ -242,10 +242,17 @@ class LLVMActions(ExprListener):
         LLVMGenerator.call(ctx.ID().getText())
         self.stack.append(Value('%'+str(LLVMGenerator.tmp-1),VarType.INT, 0))
 
-    def exitRead(self, ctx:ExprParser.ReadContext):
+    def exitReadInt(self, ctx:ExprParser.ReadIntContext):
         ID = ctx.ID().getText()
-        assignValue(set_variable(ID,VarType.INT,self),Value('%'+str(LLVMGenerator.tmp-1),VarType.INT, 0))
-        LLVMGenerator.scanf(ID)
+        v = set_variable(ID,VarType.INT,self)
+        LLVMGenerator.scanf_i32(v)
+        # assignValue(v,Value('%'+str(LLVMGenerator.tmp-1),VarType.INT, 0))
+
+    def exitReadDouble(self, ctx:ExprParser.ReadDoubleContext):
+        ID = ctx.ID().getText()
+        v = set_variable(ID,VarType.REAL,self)
+        LLVMGenerator.scanf_double(v)
+        # assignValue(v,Value('%'+str(LLVMGenerator.tmp-1),VarType.REAL, 0))
 
     def exitWrite(self, ctx:ExprParser.WriteContext):
         v = self.stack.pop()
