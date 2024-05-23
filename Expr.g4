@@ -100,19 +100,7 @@ INT: '0' ..'9'+;
 
 REAL: '0' ..'9'+ '.' '0' ..'9'+;
 
-STRING: '"' [a-zA-Z0-9]* '"';
-
-// STRING: '"' (ESC | ~["\\])* '"';
-
-// ESC: '\\' (["\\/ntrbf] | UNICODE);
-
-// UNICODE: 'u' HEX HEX HEX HEX;
-
-// HEX: [0-9a-fA-F];
-
-// NUMBER: DIGIT+;
-
-// DIGIT: [0-9];
+STRING: '"' [a-zA-Z0-9 !@#$%^&*-+]* '"';
 
 DIVOP: '/';
 
