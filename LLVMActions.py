@@ -129,7 +129,7 @@ class LLVMActions(ExprListener):
             id = LoadOrCall(ID,self,ctx)
             if id == "":
                 self.stack.append(Value(ID, VarType.INT, 0))
-            print(self.stack)
+            # print(self.stack)
         else:
             v = self.stack.pop()
             loadValue(v,self)
@@ -141,7 +141,7 @@ class LLVMActions(ExprListener):
         code = LLVMGenerator.generate()
         f = open("prog.ll","w")
         f.write(code)
-        print(code)
+        # print(code)
     def exitFparam(self,ctx:ExprParser.FparamContext):
         ID = ctx.ID().getText()
         self.functions.append(ID)
@@ -177,7 +177,7 @@ class LLVMActions(ExprListener):
         self.stack.append(Value(num, VarType.STRING, len(str_content)) )
 
     def exitAdd(self, ctx):
-        print(self.stack)
+        # print(self.stack)
         v1 = self.stack.pop()
         v2 = self.stack.pop()
         if v1.type == v2.type:
@@ -273,7 +273,7 @@ class LLVMActions(ExprListener):
         self.tableItems[-1].append(v)
 
     def exitAssigntable(self, ctx: ExprParser.AssigntableContext):
-        print(self.tableItems) 
+        # print(self.tableItems) 
         tableName = ctx.ID().getText()
         del self.tableItems[-1]
         if len(self.tableItems)==1:
@@ -298,7 +298,7 @@ class LLVMActions(ExprListener):
 
 
     def exitTable(self, ctx: ExprParser.TableContext):
-        print(self.tableIndexes)
+        # print(self.tableIndexes)
 
         name = set_variable(GetV(str(ctx.ID()),self,ctx).name,VarType.TABLE,self)
         table = list(filter(lambda x: x.name == GetV(str(ctx.ID()),self,ctx).name,self.tableSizes))[0]

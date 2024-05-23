@@ -20,8 +20,5 @@ llvm:
 run: 
 	./$(EXT)
 
-interpret:
-	python3 interpreter.py
-
 clean:
 	rm $(START).ll

@@ -1,6 +1,6 @@
 grammar Expr;
 
-prog: block '<EOF>';
+prog: block;
 
 block: ((statement | function)? NEWLINE)*;
 
@@ -26,9 +26,9 @@ assignableID: id | table | structref;
 
 id: ID;
 
-idToken: ID | table |structref;
+idToken: ID | table | structref;
 
-structref: ID'.'ID;
+structref: ID '.' ID;
 
 assigntable: ID '=' newtable;
 
