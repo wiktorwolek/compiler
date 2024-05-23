@@ -13,17 +13,22 @@ statement:
 	| REPEAT repetitions blockrep ENDREPEAT	# loop;
 
 equal: ID '==' expression;
+
 blockif: block;
+
 blockrep: block;
+
 repetitions: expression;
 
 assign: assignableID '=' expression;
 
-assignableID: id | table;
+assignableID: id | table | structref;
 
 id: ID;
 
-idToken: ID | table;
+idToken: ID | table |structref;
+
+structref: ID'.'ID;
 
 assigntable: ID '=' newtable;
 
@@ -33,7 +38,7 @@ tablerow: (tableitem ',')* tableitem;
 
 tableitem: expression;
 
-write: WRITE idToken;
+write: WRITE expression;
 
 read: readInt | readDouble;
 
