@@ -2,4 +2,4 @@ read real x
 y = 1.90
 z = x + y
 
-write z
+write z + 100.0
