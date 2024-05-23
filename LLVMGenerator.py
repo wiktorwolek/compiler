@@ -38,10 +38,14 @@ class LLVMGenerator:
         LLVMGenerator.tmp += 1
 
     @staticmethod
-    def printf_string(id):
+    def printf_string(id, length):
         #LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = load i8*, i8** {id}\n"
         #LLVMGenerator.tmp += 1
-        LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strps, i32 0, i32 0), i8* %{LLVMGenerator.tmp - 1})\n"
+
+        #   %5 = getelementptr inbounds [100 x i8], [100 x i8]* %2, i64 0, i64 0
+        # LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = getelementptr inbounds [{length+1} x i8], [{length+1} x i8]* {id}, i64 0, i64 0\n"
+        # LLVMGenerator.tmp += 1
+        LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strps, i32 0, i32 0), [{length+1} x i8] %{LLVMGenerator.tmp - 1})\n"
         LLVMGenerator.tmp += 1
 
         
@@ -75,6 +79,11 @@ class LLVMGenerator:
     def load_double(id):
         LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = load double, double* {id}\n"
         LLVMGenerator.tmp += 1
+    @staticmethod
+    def load_string(id, length):
+        LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = load [{length+1} x i8], [{length+1} x i8]* {id}\n"
+        LLVMGenerator.tmp += 1
+
 
     @staticmethod
     def add_i32(val1, val2):
@@ -114,12 +123,12 @@ class LLVMGenerator:
         LLVMGenerator.tmp += 1
 
     @staticmethod
-    def declare_string(id, is_global):
+    def declare_string(id, is_global, length):
         if(is_global):
-            LLVMGenerator.header_text += "@"+str(id)+" = global i8* zeroinitializer\n"
+            LLVMGenerator.header_text += "@"+str(id)+" = global ["+str(length+1)+" x i8] zeroinitializer\n"
         # @__const.main.str = private unnamed_addr constant [6 x i8] c"Hello\00", align 1
         else:
-            LLVMGenerator.buffer += "%"+id+" = alloca i8*\n"
+            LLVMGenerator.buffer += "%"+id+" = alloca ["+str(length+1)+" x i8]\n"
             # LLVMGenerator.buffer += "%"+str(id)+" = alloca double\n"
             pass
 
@@ -135,7 +144,7 @@ class LLVMGenerator:
       LLVMGenerator.buffer += "%ptr"+num+" = alloca i8*\n"
       LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = getelementptr inbounds ["+str(length)+" x i8], ["+str(length)+" x i8]* %"+num+", i32 0, i32 0\n"
       LLVMGenerator.tmp +=1
-      LLVMGenerator.buffer += "store i8* %"+str(LLVMGenerator.tmp-1)+", i8** %ptr"+num+"\n";    
+      LLVMGenerator.buffer += "store i8* %"+str(LLVMGenerator.tmp-1)+", i8** %ptr"+num+"\n"    
       LLVMGenerator.str_counter+=1
 
     @staticmethod
@@ -151,14 +160,24 @@ class LLVMGenerator:
     def fptosi(id):
         LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = fptosi double {id} to i32\n"
         LLVMGenerator.tmp += 1
+
     @staticmethod
     def scanf_i32(id):
       LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @strs, i32 0, i32 0), i32* {id})\n"
       LLVMGenerator.tmp += 1
+
     def scanf_double(id):
     #   %7 = call i32 (i8*, ...) @__isoc99_scanf(i8* noundef getelementptr inbounds ([5 x i8], [5 x i8]* @.str, i64 0, i64 0), double* noundef %6)
       LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strsd, i64 0, i64 0), double* {id})\n"
       LLVMGenerator.tmp += 1
+
+    def scanf_string(id, length):
+      
+      #   %4 = call i32 (i8*, ...) @__isoc99_scanf(i8* noundef getelementptr inbounds ([3 x i8], [3 x i8]* @.str, i64 0, i64 0), i8* noundef %3)
+      LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @strss, i64 0, i64 0), [{length+1} x i8]* {id})\n"
+      LLVMGenerator.tmp += 1
+      LLVMGenerator.str_counter += 1
+
     @staticmethod
     def call(id):
         LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = call i32 @"+id+"()\n"
@@ -182,44 +201,44 @@ class LLVMGenerator:
         return "%"+str(LLVMGenerator.tmp - 1)
     @staticmethod
     def repeatstart(repetitions):
-        LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = alloca i32\n";
+        LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = alloca i32\n"
         counter = LLVMGenerator.tmp
         LLVMGenerator.tmp+=1
-        LLVMGenerator.buffer += "store i32 "+"0"+", i32* %"+str(counter)+"\n";
+        LLVMGenerator.buffer += "store i32 "+"0"+", i32* %"+str(counter)+"\n"
         LLVMGenerator.br += 1
         LLVMGenerator.buffer += f"br label %cond"+str(LLVMGenerator.br)+"\n"
         LLVMGenerator.buffer += f"cond{str(LLVMGenerator.br)}:\n"
         LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = load i32, i32* %"+str(counter)+"\n"
         LLVMGenerator.tmp+=1
-        LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = add i32 %"+str(LLVMGenerator.tmp-1)+", "+"1"+"\n";
+        LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = add i32 %"+str(LLVMGenerator.tmp-1)+", "+"1"+"\n"
         LLVMGenerator.tmp += 1
-        LLVMGenerator.buffer += "store i32 %"+str(LLVMGenerator.tmp-1)+", i32* %"+str(counter)+"\n";
-        LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = icmp slt i32 %"+str(LLVMGenerator.tmp-2)+", "+repetitions+"\n";
+        LLVMGenerator.buffer += "store i32 %"+str(LLVMGenerator.tmp-1)+", i32* %"+str(counter)+"\n"
+        LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = icmp slt i32 %"+str(LLVMGenerator.tmp-2)+", "+repetitions+"\n"
         LLVMGenerator.tmp += 1
-        LLVMGenerator.buffer += "br i1 %"+str(LLVMGenerator.tmp-1)+", label %true"+str(LLVMGenerator.br)+", label %false"+str(LLVMGenerator.br)+"\n";
+        LLVMGenerator.buffer += "br i1 %"+str(LLVMGenerator.tmp-1)+", label %true"+str(LLVMGenerator.br)+", label %false"+str(LLVMGenerator.br)+"\n"
         LLVMGenerator.buffer += "true" + str(LLVMGenerator.br)+":\n"
         LLVMGenerator.bstack.append(LLVMGenerator.br)
     @staticmethod
     def repeatend():
         b = LLVMGenerator.bstack.pop()
         LLVMGenerator.buffer += "br label %cond"+str(b)+"\n"
-        LLVMGenerator.buffer += "false"+str(b)+":\n";
+        LLVMGenerator.buffer += "false"+str(b)+":\n"
     @staticmethod
     def ifstart():
         LLVMGenerator.br += 1
-        LLVMGenerator.buffer += "br i1 %"+str(LLVMGenerator.tmp-1)+", label %true"+str(LLVMGenerator.br)+", label %false"+str(LLVMGenerator.br)+"\n";
-        LLVMGenerator.buffer += "true"+str(LLVMGenerator.br)+":\n";
+        LLVMGenerator.buffer += "br i1 %"+str(LLVMGenerator.tmp-1)+", label %true"+str(LLVMGenerator.br)+", label %false"+str(LLVMGenerator.br)+"\n"
+        LLVMGenerator.buffer += "true"+str(LLVMGenerator.br)+":\n"
         LLVMGenerator.bstack.append(LLVMGenerator.br)
     @staticmethod
     def ifend():
         b = LLVMGenerator.bstack.pop()
-        LLVMGenerator.buffer += "br label %false"+str(b)+"\n";
-        LLVMGenerator.buffer += "false"+str(b)+":\n";
+        LLVMGenerator.buffer += "br label %false"+str(b)+"\n"
+        LLVMGenerator.buffer += "false"+str(b)+":\n"
     @staticmethod
     def icmp(id,val):
-        LLVMGenerator.buffer +="%"+str(LLVMGenerator.tmp)+" = load i32, i32* "+str(id)+"\n";
+        LLVMGenerator.buffer +="%"+str(LLVMGenerator.tmp)+" = load i32, i32* "+str(id)+"\n"
         LLVMGenerator.tmp += 1
-        LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = icmp eq i32 %"+str(LLVMGenerator.tmp-1)+", "+val+"\n";
+        LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = icmp eq i32 %"+str(LLVMGenerator.tmp-1)+", "+val+"\n"
         LLVMGenerator.tmp += 1
     @staticmethod
     def generate():
@@ -231,6 +250,7 @@ class LLVMGenerator:
       text += "@strp  = constant [4 x i8] c\"%d\\0A\\00\"\n"
       text += "@strpi = constant [4 x i8] c\"%d\\0A\\00\"\n"
       text += "@strpd = constant [4 x i8] c\"%f\\0A\\00\"\n"
+      text += "@strss = constant [3 x i8] c\"%s\\00\"\n"
       text += "@strsd = constant [4 x i8] c\"%lf\\00\"\n"
       text += "@strs  = constant [3 x i8] c\"%d\\00\"\n"
       text += "@strps = constant [4 x i8] c\"%s\\0A\\00\"\n"

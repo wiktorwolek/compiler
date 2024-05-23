@@ -19,32 +19,32 @@ Value = namedtuple('Value', ['name', 'type', 'length'])
 Table = namedtuple('Table',['name','i','j'])
 def check_element(arr, v):
     return arr.count(v)
-def set_variable(ID,type,object):
+def set_variable(ID,type,object, length=0):
     if object.is_global:
         id = "@"+ID
         if len(list(filter(lambda x: x.name==ID,object.globalnames))) == 0:
-            v = declareValue(ID,type,object)
+            v = declareValue(ID,type,object, length)
             object.globalnames.append(v)
         
     else: 
         id = "%"+ID
         if len(list(filter(lambda x: x.name==ID,object.localnames))) == 0:
-            v = declareValue(ID,type,object)
+            v = declareValue(ID,type,object, length)
             object.localnames.append(v)
        
     return id
-def declareValue(ID,type,object):  
+def declareValue(ID,type,object, length=0):  
         if type == VarType.INT:
-            v = Value(ID,VarType.INT, 0)
+            v = Value(ID,VarType.INT, length)
             LLVMGenerator.declare_i32(ID,object.is_global)
         elif type == VarType.REAL:
-            v = Value(ID,VarType.REAL, 0)
+            v = Value(ID,VarType.REAL, length)
             LLVMGenerator.declare_double(ID,object.is_global)
         elif type == VarType.STRING:
-            v = Value(ID,VarType.STRING, 0)
-            LLVMGenerator.declare_string(ID,object.is_global) 
+            v = Value(ID,VarType.STRING, length)
+            LLVMGenerator.declare_string(ID,object.is_global, length) 
         elif type == VarType.TABLE:
-            v = Value(ID,VarType.TABLE, 0)
+            v = Value(ID,VarType.TABLE, length)
             LLVMGenerator.create_table(ID,object.table_size,object.is_global)
             object.tableSizes.append(Table(ID,len(object.tableItems),len(object.tableItems[0])))
         return v
@@ -62,18 +62,21 @@ def loadValue(v, object):
         LLVMGenerator.load_i32(v.name)
     if v.type == VarType.REAL:
         LLVMGenerator.load_double(v.name)
-    object.stack.append(Value("%"+str(LLVMGenerator.tmp-1),v.type, 0))
+    if v.type == VarType.STRING:
+        LLVMGenerator.load_string(v.name, v.length)
+    object.stack.append(Value("%"+str(LLVMGenerator.tmp-1),v.type, v.length))
+
 
 def LoadOrCall(ID, object,ctx):
     id = ""
     if  len(list(filter(lambda x: x.name==ID,object.localnames))) > 0:
         v = list(filter(lambda x: x.name==ID,object.localnames))[0]
         id = "%"+v.name
-        loadValue(Value(id,v.type, 0),object)
+        loadValue(Value(id,v.type, v.length),object)
     elif len(list(filter(lambda x: x.name==ID,object.globalnames))) > 0:
         v = list(filter(lambda x: x.name==ID,object.globalnames))[0]
         id = '@'+v.name
-        loadValue(Value(id,v.type, 0),object)
+        loadValue(Value(id,v.type, v.length),object)
     elif len(list(filter(lambda x: x==ID,object.functions))) > 0:
         id = ID
         LLVMGenerator.call(ID)
@@ -124,7 +127,6 @@ class LLVMActions(ExprListener):
     def exitIdToken(self, ctx: ExprParser.IdTokenContext):
 
         if hasattr(ctx,"ID") and callable(ctx.ID) and ctx.ID() != None:
-            a = ctx.ID()
             ID = ctx.ID().getText()
             id = LoadOrCall(ID,self,ctx)
             if id == "":
@@ -254,6 +256,15 @@ class LLVMActions(ExprListener):
         LLVMGenerator.scanf_double(v)
         # assignValue(v,Value('%'+str(LLVMGenerator.tmp-1),VarType.REAL, 0))
 
+    def exitReadString(self, ctx:ExprParser.ReadStringContext):
+        ID = ctx.ID().getText()
+        INT = ctx.INT().getText()
+        v = set_variable(ID,VarType.STRING,self, int(INT))
+        LLVMGenerator.allocate_string(ID, int(INT))
+        self.stack.append(Value(v, VarType.STRING, int(INT)))
+        LLVMGenerator.scanf_string(v, int(INT))
+
+
     def exitWrite(self, ctx:ExprParser.WriteContext):
         v = self.stack.pop()
         ID = v.name
@@ -263,7 +274,7 @@ class LLVMActions(ExprListener):
         elif v.type == VarType.REAL:
             LLVMGenerator.printf_double(ID)
         elif v.type == VarType.STRING:
-            LLVMGenerator.printf_string(ID)
+            LLVMGenerator.printf_string(ID, v.length)
     
     def exitTablerow(self, ctx: ExprParser.TablerowContext):
         self.tableItems.append([])

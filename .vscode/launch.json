@@ -35,6 +35,14 @@
             "program": "compiler.py",
             "console": "integratedTerminal",
             "args": "tests/tables/local_table_int.x"
+        },
+        {
+            "name": "Python: read string",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "compiler.py",
+            "console": "integratedTerminal",
+            "args": "tests/strings/read_string.x"
         }
     ]
 }

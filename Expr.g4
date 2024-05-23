@@ -35,11 +35,13 @@ tableitem: expression;
 
 write: WRITE idToken;
 
-read: readInt | readDouble;
+read: readInt | readDouble | readString;
 
 readInt: READ 'int'? ID;
 
 readDouble: READ 'real' ID;
+
+readString: READ 'string' INT ID;
 
 expression: expression1 | add;
 
