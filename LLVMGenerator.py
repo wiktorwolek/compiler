@@ -176,7 +176,7 @@ class LLVMGenerator:
             LLVMGenerator.buffer += "%"+str(id)+" = alloca "+str(size)+"\n"
             return "%"+str(id)
     @staticmethod
-    def get_table_element(id, size,index):
+    def get_table_element(id, size, index):
         LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = getelementptr inbounds {size}, {size}* {id}, i32 0, i32 {index}\n"
         LLVMGenerator.tmp += 1
         return "%"+str(LLVMGenerator.tmp - 1)

@@ -1,4 +1,4 @@
-intList = {1, 2, 3, 4, 5, 6}
+intList = {1, 2, 3, 4, 5}
 
 read int elem
 

@@ -35,6 +35,22 @@
             "program": "compiler.py",
             "console": "integratedTerminal",
             "args": "tests/tables/local_table_int.x"
+        },
+        {
+            "name": "Python: list",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "compiler.py",
+            "console": "integratedTerminal",
+            "args": "tests/tables/list.x"
+        },
+        {
+            "name": "Python: redeclare",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "compiler.py",
+            "console": "integratedTerminal",
+            "args": "tests/errors/redeclare_type.x "
         }
     ]
 }

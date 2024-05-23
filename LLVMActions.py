@@ -49,13 +49,21 @@ def declareValue(ID,type,object):
             object.tableSizes.append(Table(ID,len(object.tableItems),len(object.tableItems[0])))
         return v
 
-def assignValue(ID,v):
+def assignValue(ID,v, object, ctx, original_ID = None):
+        if original_ID == None:
+            original_ID = ID
+
+        value = GetV(original_ID, object, ctx)
+        if value.type != v.type:
+            object.error(ctx.start.line, "Assign type mismatch in "+str(original_ID))
+
         if v.type == VarType.INT:
             LLVMGenerator.assign_i32(ID, v.name)
         elif v.type == VarType.REAL:
             LLVMGenerator.assign_double(ID, v.name)
         elif v.type == VarType.STRING:
             LLVMGenerator.assign_string(ID, v.name)
+        
 
 def loadValue(v, object):
     if v.type == VarType.INT:
@@ -110,15 +118,18 @@ class LLVMActions(ExprListener):
     def exitAssign(self, ctx):
         v = self.stack.pop()
         if type(ctx.children[0].children[0]) is ExprParser.IdContext:
-            ID = ctx.children[0].children[0].ID().getText();
+            ID = ctx.children[0].children[0].ID().getText()
         else:
             ID = self.stack.pop().name
+
+        original_ID = ID
+
         if ID[0] != '%':
             if ID[0]=='@':
                 ID = ID[1:]
             ID = set_variable(ID, v.type, self)
         
-        assignValue(ID,v)
+        assignValue(ID,v, self, ctx, original_ID)
 
 
     def exitIdToken(self, ctx: ExprParser.IdTokenContext):
@@ -153,7 +164,7 @@ class LLVMActions(ExprListener):
 
     def exitFblock(self,ctx:ExprParser.FblockContext):
         if len(list(filter(lambda x: x.name==self.function,self.localnames))) == 0:
-          assignValue(set_variable(self.function,VarType.INT,self),Value("0",VarType.INT, 0))
+          assignValue(set_variable(self.function,VarType.INT,self),Value("0",VarType.INT, 0), self, ctx)
         loadValue(Value("%"+self.function,VarType.INT, 0),self)
         LLVMGenerator.function_end()
         self.localnames = []
@@ -275,6 +286,7 @@ class LLVMActions(ExprListener):
     def exitAssigntable(self, ctx: ExprParser.AssigntableContext):
         # print(self.tableItems) 
         tableName = ctx.ID().getText()
+
         del self.tableItems[-1]
         if len(self.tableItems)==1:
             size = f"[{len(self.tableItems[0])} x i32]"
@@ -285,14 +297,15 @@ class LLVMActions(ExprListener):
         self.tableSizes.append(Table(tableName,len(self.tableItems),len(self.tableItems[0])))
         tableName = set_variable(tableName,VarType.TABLE,self)
        # name = LLVMGenerator.get_table_element(tableName,size)
+       
         for i in range(0, len(self.tableItems)):
             if len(self.tableItems)!=1:
                 name = LLVMGenerator.get_table_element(tableName,size,str(i))
             else:
                 name = tableName
             for j in range(0, len(self.tableItems[i])):
-                varName = LLVMGenerator.get_table_element(name,f"[{len(self.tableItems[i][j])} x i32]",str(j))
-                assignValue(varName, self.tableItems[i][j])
+                varName = LLVMGenerator.get_table_element(name,f"[{len(self.tableItems[i])} x i32]",str(j))
+                assignValue(varName, self.tableItems[i][j], self, ctx)
        
         self.tableItems = [[]]
 
