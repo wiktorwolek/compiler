@@ -50,12 +50,11 @@ def declareValue(ID,type,object):
         return v
 
 def assignValue(ID,v, object, ctx, original_ID = None):
-        if original_ID == None:
-            original_ID = ID
+        if original_ID != None:
+            value = GetV(original_ID, object, ctx)
+            if value.type != v.type:
+                object.error(ctx.start.line, "Assign type mismatch in "+str(original_ID))
 
-        value = GetV(original_ID, object, ctx)
-        if value.type != v.type:
-            object.error(ctx.start.line, "Assign type mismatch in "+str(original_ID))
 
         if v.type == VarType.INT:
             LLVMGenerator.assign_i32(ID, v.name)

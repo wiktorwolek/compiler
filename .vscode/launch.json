@@ -51,6 +51,14 @@
             "program": "compiler.py",
             "console": "integratedTerminal",
             "args": "tests/errors/redeclare_type.x "
+        },
+        {
+            "name": "Python: table",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "compiler.py",
+            "console": "integratedTerminal",
+            "args": "tests/tables/non_square_table.x"
         }
     ]
 }
