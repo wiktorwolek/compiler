@@ -118,10 +118,11 @@ class LLVMActions(ExprListener):
         v = self.stack.pop()
         if type(ctx.children[0].children[0]) is ExprParser.IdContext:
             ID = ctx.children[0].children[0].ID().getText()
+            original_ID = ID
         else:
             ID = self.stack.pop().name
+            original_ID = None
 
-        original_ID = ID
 
         if ID[0] != '%':
             if ID[0]=='@':
