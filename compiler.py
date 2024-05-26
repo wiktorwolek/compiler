@@ -23,13 +23,13 @@ def main(args):
 
     # Step 5: Create parse tree
     tree = parser.prog()
-    # print(tree.toStringTree(recog=parser))
+    print(tree.toStringTree(recog=parser))
     walker = ParseTreeWalker()
     try:
         walker.walk(LLVMActions(), tree)
     except:
-        #  print(LLVMGenerator().generate())
-        #  print(LLVMGenerator.buffer)
+         print(LLVMGenerator().generate())
+         print(LLVMGenerator.buffer)
          print("Compilation finished with errors")
 if __name__ == '__main__':
     main(sys.argv)
