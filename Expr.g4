@@ -2,7 +2,7 @@ grammar Expr;
 
 prog: block;
 
-block: ((statement | function)? NEWLINE)*;
+block: ((statement | function | struct | declStruct)? NEWLINE)*;
 
 statement:
 	write									# write1
@@ -71,9 +71,26 @@ multiply: expression2 MULOP expression2;
 divide: expression2 DIVOP expression2;
 
 function: FUNCTION fparam fblock ENDFUNCTION;
+
 fparam: ID;
 
 fblock: ( statement? NEWLINE)*;
+
+struct: STRUCT sname sblock ENDSTRUCT;
+
+sname: ID;
+
+sblock: ( declaration? NEWLINE)*;
+
+declaration: declInt | declReal;
+
+declInt: 'int' assignableID;
+
+declReal: 'real' assignableID;
+
+declStruct: sname assignableID;
+
+// declString: 'string' INT assignableID;
 
 REPEAT: 'repeat';
 
@@ -90,6 +107,10 @@ CALL: 'call';
 FUNCTION: 'function';
 
 ENDFUNCTION: 'endfunction';
+
+STRUCT: 'struct';
+
+ENDSTRUCT: 'endstruct';
 
 WRITE: 'write';
 
