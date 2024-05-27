@@ -80,6 +80,8 @@ fblock: ( statement? NEWLINE)*;
 
 struct: STRUCT sname sblock ENDSTRUCT;
 
+class: CLASS sname cblock ENDCLASS;
+
 sname: ID;
 
 sblock: ( declaration? NEWLINE)*;
@@ -91,6 +93,8 @@ declInt: 'int' ID;
 declReal: 'real' ID;
 
 declStruct: sname ID;
+
+delcClass: sname ID;
 
 // declString: 'string' INT assignableID;
 
@@ -113,6 +117,10 @@ ENDFUNCTION: 'endfunction';
 STRUCT: 'struct';
 
 ENDSTRUCT: 'endstruct';
+
+CLASS: 'class';
+
+ENDCLASS: 'endclass';
 
 WRITE: 'write';
 
