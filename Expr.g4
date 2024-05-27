@@ -46,7 +46,7 @@ readInt: READ 'int'? ID;
 
 readDouble: READ 'real' ID;
 
-expression: expression1 | add;
+expression: expression1 | add | substract;
 
 expression1: expression2 | multiply | divide;
 
@@ -65,6 +65,8 @@ table: ID '[' indexes ']' | ID '[' indexes ',' indexes ']';
 indexes: expression;
 
 add: expression1 ADDOP expression;
+
+substract: expression1 SUBOP expression1;
 
 multiply: expression2 MULOP expression2;
 
@@ -133,6 +135,8 @@ DIVOP: '/';
 MULOP: '*';
 
 ADDOP: '+';
+
+SUBOP: '-';
 
 NEWLINE: '\r'? '\n';
 
