@@ -2,41 +2,41 @@
 [TOC]
 
 ## Deklaracje zmiennych 
-#### Możliwości
-#### Ograniczenia
+<!-- no toc -->#### Możliwości
+<!-- no toc -->#### Ograniczenia
 
 ## Obsługa wejścia-wyjścia
-#### Możliwości
-#### Ograniczenia
+<!-- no toc -->#### Możliwości
+<!-- no toc -->#### Ograniczenia
 
 ## Obsługa operacji arytemtycznych 
-#### Możliwości
-#### Ograniczenia
+<!-- no toc -->#### Możliwości
+<!-- no toc -->#### Ograniczenia
 
 ## Obsługa zmiennych tablicowych
-#### Możliwości
-#### Ograniczenia
+<!-- no toc -->#### Możliwości
+<!-- no toc -->#### Ograniczenia
 
 ## Obsługa macierzy
-#### Możliwości
-#### Ograniczenia
+<!-- no toc -->#### Możliwości
+<!-- no toc -->#### Ograniczenia
 
 ## Obsługa ciągu znaków
-#### Możliwości
-#### Ograniczenia
+<!-- no toc -->#### Możliwości
+<!-- no toc -->#### Ograniczenia
 
 ## Instrukcje warunkowe
-#### Możliwości
-#### Ograniczenia
+<!-- no toc -->#### Możliwości
+<!-- no toc -->#### Ograniczenia
 
 ## Funkcje
-#### Możliwości
-#### Ograniczenia
+<!-- no toc -->#### Możliwości
+<!-- no toc -->#### Ograniczenia
 
 ## Struktury
-#### Możliwości
-#### Ograniczenia
+<!-- no toc -->#### Możliwości
+<!-- no toc -->#### Ograniczenia
 
 ## Klasy
-#### Możliwości
-#### Ograniczenia
+<!-- no toc -->#### Możliwości
+<!-- no toc -->#### Ograniczenia
