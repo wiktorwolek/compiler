@@ -84,11 +84,11 @@ sblock: ( declaration? NEWLINE)*;
 
 declaration: declInt | declReal;
 
-declInt: 'int' assignableID;
+declInt: 'int' ID;
 
-declReal: 'real' assignableID;
+declReal: 'real' ID;
 
-declStruct: sname assignableID;
+declStruct: sname ID;
 
 // declString: 'string' INT assignableID;
 

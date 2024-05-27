@@ -13,6 +13,7 @@ class VarType(Enum):
     UNKNOWN = 3
     TABLE = 4
     STRING = 5
+    STRUCT = 6
 
 # Define Value namedtuple to represent variables
 Value = namedtuple('Value', ['name', 'type', 'length'])
@@ -47,6 +48,9 @@ def declareValue(ID,type,object):
             v = Value(ID,VarType.TABLE, 0)
             LLVMGenerator.create_table(ID,object.table_size,object.is_global)
             object.tableSizes.append(Table(ID,len(object.tableItems),len(object.tableItems[0])))
+        elif type == VarType.STRUCT:
+            v = Value(ID, VarType.STRUCT, object.structName)
+            LLVMGenerator.declare_struct(ID, object.structName, object.is_global)
         return v
 
 def assignValue(ID,v, object, ctx, original_ID = None):
@@ -113,6 +117,9 @@ class LLVMActions(ExprListener):
         self.functions = []
         self.function = ""
         self.tableSizes = []
+        self.structures = dict()
+        # self.structItems = []
+        # self.structItemTypes = []
 
     def exitAssign(self, ctx):
         v = self.stack.pop()
@@ -152,7 +159,7 @@ class LLVMActions(ExprListener):
         code = LLVMGenerator.generate()
         f = open("prog.ll","w")
         f.write(code)
-        # print(code)
+        print(code)
     def exitFparam(self,ctx:ExprParser.FparamContext):
         ID = ctx.ID().getText()
         self.functions.append(ID)
@@ -169,6 +176,57 @@ class LLVMActions(ExprListener):
         LLVMGenerator.function_end()
         self.localnames = []
         self.is_global = True
+
+    def enterSblock(self, ctx:ExprParser.SblockContext):
+        print(ctx.children[1].children[0].children[0].symbol.text)
+        print(self.stack)
+
+    def exitDeclStruct(self, ctx:ExprParser.DeclStructContext):
+        self.structName = ctx.children[0].stop.text
+        set_variable(ctx.ID().getText(), VarType.STRUCT, self)
+
+    def exitStructref(self, ctx: ExprParser.StructrefContext):
+        structName = ctx.children[0].symbol.text
+        fieldName = ctx.children[2].symbol.text
+        structItems = self.structures[GetV(structName, self, ctx).length]
+        try:
+            value = list(filter(lambda x: x.name==fieldName, structItems))[0]
+            offset = structItems.index(value)
+        except:
+            self.error(ctx.start.line, "undeclared structure field is referenced")
+        tmpID = LLVMGenerator.get_struct_element("%"+structName, GetV(structName, self, ctx).length, offset)
+        self.stack.append(Value(tmpID, value.type, 0))
+        
+
+    def exitDeclInt(self, ctx:ExprParser.DeclIntContext):
+        self.structures[self.structName].append(
+            Value(ctx.ID().getText(), VarType.INT, 0)
+            )
+
+    def exitDeclReal(self, ctx:ExprParser.DeclRealContext):
+        self.structures[self.structName].append(
+            Value(ctx.ID().getText(), VarType.REAL, 0)
+            )
+
+    def exitSblock(self, ctx:ExprParser.SblockContext):
+        itemTypeNames = []
+        for item in self.structures[self.structName]:
+            if item.type == VarType.INT:
+                itemTypeNames.append('i32')
+            elif item.type == VarType.REAL:
+                itemTypeNames.append('double')
+
+        structTypeList = ', '.join(itemTypeNames)
+
+        LLVMGenerator.create_struct(self.structName, self, self.is_global, structTypeList)
+
+
+    def enterStruct(self, ctx:ExprParser.StructContext):
+        self.structName = ctx.children[1].children[0].symbol.text
+        self.structures.update({self.structName : []})
+
+    def exitID(self, ctx:ExprParser.IdContext):
+        print(self.stack)
            
     def exitInt(self, ctx):
         self.stack.append(Value(ctx.INT().getText(), VarType.INT, 0))

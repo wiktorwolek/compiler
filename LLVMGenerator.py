@@ -1,3 +1,4 @@
+
 class LLVMGenerator:
     header_text = ""
     main_text = ""
@@ -15,6 +16,7 @@ class LLVMGenerator:
         LLVMGenerator.main_tmp = LLVMGenerator.tmp
         LLVMGenerator.buffer = "define i32 @" + id + "() nounwind {\n"
         LLVMGenerator.tmp = 1
+
     @staticmethod
     def function_end():
         LLVMGenerator.buffer += "ret i32 %" + str(LLVMGenerator.tmp - 1) + "\n"
@@ -22,6 +24,7 @@ class LLVMGenerator:
         LLVMGenerator.header_text += LLVMGenerator.buffer
         LLVMGenerator.buffer = ""
         LLVMGenerator.tmp = LLVMGenerator.main_tmp
+
     
     @staticmethod
     def printf_i32(id):
@@ -155,6 +158,7 @@ class LLVMGenerator:
     def scanf_i32(id):
       LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @strs, i32 0, i32 0), i32* {id})\n"
       LLVMGenerator.tmp += 1
+    @staticmethod
     def scanf_double(id):
     #   %7 = call i32 (i8*, ...) @__isoc99_scanf(i8* noundef getelementptr inbounds ([5 x i8], [5 x i8]* @.str, i64 0, i64 0), double* noundef %6)
       LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strsd, i64 0, i64 0), double* {id})\n"
@@ -175,11 +179,34 @@ class LLVMGenerator:
         else:
             LLVMGenerator.buffer += "%"+str(id)+" = alloca "+str(size)+"\n"
             return "%"+str(id)
+        
+    @staticmethod
+    def create_struct(id, object, is_global, structTypeList):
+        # %struct.Person = type { i32, float, i32, [50 x i8] }
+        if(is_global):
+            LLVMGenerator.header_text += "%struct."+str(id)+" = type {"+structTypeList+"}\n"
+            return "@"+str(id)
+        # else:
+            # object.error()
+            # LLVMGenerator.buffer += "CREATING STRUCT\n"
+            # return "%"+str(id)
+    @staticmethod
+    def declare_struct(id, struct_name, is_global):
+        # %1 = alloca %struct.Person, align 4
+        LLVMGenerator.buffer += "%"+str(id)+" = alloca %struct."+str(struct_name)+"\n"
+
     @staticmethod
     def get_table_element(id, size, index):
         LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = getelementptr inbounds {size}, {size}* {id}, i32 0, i32 {index}\n"
         LLVMGenerator.tmp += 1
         return "%"+str(LLVMGenerator.tmp - 1)
+    
+    @staticmethod
+    def get_struct_element(id, structName, offset):
+        LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = getelementptr inbounds %struct.{structName}, %struct.{structName}* {id}, i32 0, i32 {offset}\n"
+        LLVMGenerator.tmp += 1
+        return "%"+str(LLVMGenerator.tmp - 1)
+
     @staticmethod
     def repeatstart(repetitions):
         LLVMGenerator.buffer += "%"+str(LLVMGenerator.tmp)+" = alloca i32\n"
