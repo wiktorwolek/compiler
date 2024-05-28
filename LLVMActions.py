@@ -73,6 +73,8 @@ def loadValue(v, object):
         LLVMGenerator.load_i32(v.name)
     if v.type == VarType.REAL:
         LLVMGenerator.load_double(v.name)
+    if v.type == VarType.STRING:
+        LLVMGenerator.load_string(v.name)
     object.stack.append(Value("%"+str(LLVMGenerator.tmp-1),v.type, 0))
 
 def LoadOrCall(ID, object,ctx):

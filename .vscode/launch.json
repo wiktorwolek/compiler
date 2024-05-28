@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "compiler.py",
             "console": "integratedTerminal",
-            "args": "tests/declarations/global_string.x"
+            "args": "tests/loop/loop_1.x"
         },
         {
             "name": "Python: global real",

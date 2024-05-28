@@ -80,6 +80,11 @@ class LLVMGenerator:
         LLVMGenerator.tmp += 1
 
     @staticmethod
+    def load_string(id):
+        LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = load i8*, i8** {id}\n"
+        LLVMGenerator.tmp += 1   
+
+    @staticmethod
     def add_i32(val1, val2):
         LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = add i32 {val1}, {val2}\n"
         LLVMGenerator.tmp += 1
