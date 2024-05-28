@@ -373,6 +373,15 @@ class LLVMActions(ExprListener):
         LLVMGenerator.call(ctx.ID().getText())
         self.stack.append(Value('%'+str(LLVMGenerator.tmp-1),VarType.INT, 0))
 
+    def exitMethodcall(self, ctx:ExprParser.MethodcallContext):
+        objectName = ctx.children[1].symbol.text
+        methodName = ctx.children[3].symbol.text
+        className = GetV(objectName, self, ctx).length
+        
+        LLVMGenerator.call(className+"0"+methodName, "%struct."+className+"* noundef nonnull align 8 dereferenceable(16) %"+objectName+"")
+        self.stack.append(Value('%'+str(LLVMGenerator.tmp-1),VarType.INT, 0))
+
+
     def exitReadInt(self, ctx:ExprParser.ReadIntContext):
         ID = ctx.ID().getText()
         v = set_variable(ID,VarType.INT,self)

@@ -62,14 +62,15 @@ expression: expression1 | add | substract;
 expression1: expression2 | multiply | divide;
 
 expression2:
-	INT						# int
-	| REAL					# real
-	| STRING				# string
-	| TOINT expression2		# toint
-	| TOREAL expression2	# toreal
-	| '(' expression ')'	# par
-	| idToken				# ids
-	| CALL ID '(' ')'		# call;
+	INT							# int
+	| REAL						# real
+	| STRING					# string
+	| TOINT expression2			# toint
+	| TOREAL expression2		# toreal
+	| '(' expression ')'		# par
+	| idToken					# ids
+	| CALL ID '(' ')'			# call
+	| CALL ID '.' ID '(' ')'	# methodcall;
 
 table: ID '[' indexes ']' | ID '[' indexes ',' indexes ']';
 

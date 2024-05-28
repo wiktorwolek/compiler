@@ -200,9 +200,13 @@ class LLVMGenerator:
       LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strsd, i64 0, i64 0), double* {id})\n"
       LLVMGenerator.tmp += 1
     @staticmethod
-    def call(id):
-        LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = call i32 @"+id+"()\n"
+    def call(id, parameters=""):
+        LLVMGenerator.buffer += f"%{LLVMGenerator.tmp} = call i32 @"+id+"("+parameters+")\n"
         LLVMGenerator.tmp += 1
+
+
+
+
     @staticmethod
     def close_main():
         LLVMGenerator.main_text += LLVMGenerator.buffer
