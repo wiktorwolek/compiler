@@ -2,7 +2,16 @@ grammar Expr;
 
 prog: block;
 
-block: ((statement | function | struct | declStruct)? NEWLINE)*;
+block: (
+		(
+			statement
+			| function
+			| struct
+			| declStruct
+			| class
+			| delcClass
+		)? NEWLINE
+	)*;
 
 statement:
 	write									# write1
@@ -22,13 +31,15 @@ repetitions: expression;
 
 assign: assignableID '=' expression;
 
-assignableID: id | table | structref;
+assignableID: id | table | structref | thisref;
 
 id: ID;
 
-idToken: ID | table | structref;
+idToken: ID | table | structref | thisref;
 
 structref: ID '.' ID;
+
+thisref: 'this_' ID;
 
 assigntable: ID '=' newtable;
 
@@ -88,6 +99,16 @@ sblock: ( declaration? NEWLINE)*;
 
 declaration: declInt | declReal;
 
+cblock: ( classDeclaration? NEWLINE)*;
+
+method: METHOD mparam mblock ENDMETHOD;
+
+mparam: ID;
+
+mblock: ( statement? NEWLINE)*;
+
+classDeclaration: declInt | declReal | method;
+
 declInt: 'int' ID;
 
 declReal: 'real' ID;
@@ -121,6 +142,10 @@ ENDSTRUCT: 'endstruct';
 CLASS: 'class';
 
 ENDCLASS: 'endclass';
+
+METHOD: 'method';
+
+ENDMETHOD: 'endmethod';
 
 WRITE: 'write';
 

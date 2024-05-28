@@ -1,24 +1,33 @@
 #include <iostream>
 
-class Something
+extern "C"
 {
-    int year;
-
-public:
-    Something()
+    class Something
     {
-        this->year = 2024;
-    }
+        int year;
+        int day;
+        double temperature;
 
-    void incrementYear()
+    public:
+        Something()
+        {
+            this->year = 2024;
+            this->day = 28;
+            this->temperature = 28.90;
+        }
+
+        void incrementYear()
+        {
+            this->year += 1;
+        }
+    };
+
+    int main()
     {
-        this->year += 1;
+        Something thisYear;
+
+        thisYear.incrementYear();
+
+        return 0;
     }
-};
-
-int main()
-{
-    Something thisYear;
-
-    return 0;
 }

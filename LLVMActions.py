@@ -208,6 +208,11 @@ class LLVMActions(ExprListener):
             Value(ctx.ID().getText(), VarType.REAL, 0)
             )
 
+    def exitMethod(self, ctx:ExprParser.MethodContext):
+        self.structures[self.structName].append(
+            Value(ctx.ID().getText(), VarType.METHOD, 0)
+            )
+
     def exitSblock(self, ctx:ExprParser.SblockContext):
         itemTypeNames = []
         for item in self.structures[self.structName]:
@@ -220,8 +225,23 @@ class LLVMActions(ExprListener):
 
         LLVMGenerator.create_struct(self.structName, self, self.is_global, structTypeList)
 
+    def exitCblock(self, ctx:ExprParser.CblockContext):
+        itemTypeNames = []
+        for item in self.structures[self.structName]:
+            if item.type == VarType.INT:
+                itemTypeNames.append('i32')
+            elif item.type == VarType.REAL:
+                itemTypeNames.append('double')
+
+        structTypeList = ', '.join(itemTypeNames)
+
+        LLVMGenerator.create_struct(self.structName, self, self.is_global, structTypeList)
 
     def enterStruct(self, ctx:ExprParser.StructContext):
+        self.structName = ctx.children[1].children[0].symbol.text
+        self.structures.update({self.structName : []})
+
+    def enterClass(self, ctx:ExprParser.ClassContext):
         self.structName = ctx.children[1].children[0].symbol.text
         self.structures.update({self.structName : []})
 
