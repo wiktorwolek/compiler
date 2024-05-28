@@ -4,6 +4,7 @@ class LLVMGenerator:
     main_text = ""
     main_tmp = 1
     buffer = ""
+    method_buffer = ""
     str_counter = 1
     tmp = 1
     br = 0
@@ -18,6 +19,24 @@ class LLVMGenerator:
         LLVMGenerator.tmp = 1
 
     @staticmethod
+    def method_start(id, className):
+
+# define linkonce_odr dso_local void @_ZN9Something13incrementYearEv(%class.Something* noundef nonnull align 8 dereferenceable(16) %0) #6 comdat align 2 {
+#   %2 = alloca %class.Something*, align 8
+#   store %class.Something* %0, %class.Something** %2, align 8
+#   %3 = load %class.Something*, %class.Something** %2, align 8
+        LLVMGenerator.header_text += "$" + className + "0" + id + " = comdat any\n"
+
+        LLVMGenerator.main_text += LLVMGenerator.buffer
+        LLVMGenerator.main_tmp = LLVMGenerator.tmp
+        LLVMGenerator.buffer += "define i32 @" + className + "0" + id + "(%struct."+className+"* noundef nonnull align 8 dereferenceable(16) %0) #6 comdat align 2 {\n"
+        LLVMGenerator.buffer += "%2 = alloca %struct."+className+"*, align 8\n"
+        LLVMGenerator.buffer += "store %struct."+className+"* %0, %struct."+className+"** %2, align 8\n"
+        LLVMGenerator.buffer += "%3 = load %struct."+className+"*, %struct."+className+"** %2, align 8\n"
+        LLVMGenerator.tmp = 4
+
+
+    @staticmethod
     def function_end():
         LLVMGenerator.buffer += "ret i32 %" + str(LLVMGenerator.tmp - 1) + "\n"
         LLVMGenerator.buffer += "}\n"
@@ -25,7 +44,14 @@ class LLVMGenerator:
         LLVMGenerator.buffer = ""
         LLVMGenerator.tmp = LLVMGenerator.main_tmp
 
-    
+    @staticmethod
+    def method_end():
+        LLVMGenerator.buffer += "ret i32 %" + str(LLVMGenerator.tmp - 1) + "\n"
+        LLVMGenerator.buffer += "}\n"
+        LLVMGenerator.method_buffer += LLVMGenerator.buffer
+        LLVMGenerator.buffer = ""
+        LLVMGenerator.tmp = LLVMGenerator.main_tmp
+
     @staticmethod
     def printf_i32(id):
         #LLVMGenerator.buffer  += f"%{LLVMGenerator.tmp} = load i32, i32* {id}\n"
@@ -275,4 +301,5 @@ class LLVMGenerator:
       text += "define i32 @main() nounwind{\n"
       text += LLVMGenerator.main_text
       text += "ret i32 0 }\n"
+      text += LLVMGenerator.method_buffer
       return text

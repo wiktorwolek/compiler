@@ -67,6 +67,14 @@
             "program": "compiler.py",
             "console": "integratedTerminal",
             "args": "tests/structures/struct_1.x"
+        },
+        {
+            "name": "Python: class",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "compiler.py",
+            "console": "integratedTerminal",
+            "args": "tests/class.x"
         }
     ]
 }

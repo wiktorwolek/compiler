@@ -4,9 +4,9 @@ extern "C"
 {
     class Something
     {
-        int year;
         int day;
         double temperature;
+        int year;
 
     public:
         Something()
