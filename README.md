@@ -32,7 +32,12 @@ Język umożliwia wczytywanie zmiennych typu ```int``` oraz ```real```. Wykonywa
 read int year
 read real time
 ```
-
+Język umożliwia wypisanie zmiennych typu ```int```, ```real``` oraz ```string```. Wykonywane jest to z pomoca słowa kluczowego ```read```:
+```
+write myInt
+write myReal
+write myString
+```
 <!-- no toc -->#### Ograniczenia
 Nie jest obecnie możliwe wczytywanie zmiennych znakowych. 
 
@@ -60,25 +65,100 @@ Nie jest obecnie możliwe utworzenie tablicy typu real oraz string.
 
 ## Obsługa macierzy
 <!-- no toc -->#### Możliwości
+Możliwe jest utworzenie macierzy liczb typu ```int```. Inicjalizacja macierzy przebiega w następujący sposób:
+```
+myArray = {1, 2, 3, 3 + 2 * (2 + 1); 5, 6, 7, 8}
+```
+Do elementów macierzy można się odwoływać oraz przypisywać im wartości.
+```
+myElem = myMatrix[3,1]
+myMatrix[1,0] = 10
+```
 
 <!-- no toc -->#### Ograniczenia
-
-## Obsługa ciągu znaków
-<!-- no toc -->#### Możliwości
-<!-- no toc -->#### Ograniczenia
+Nie jest obecnie możliwe utworzenie macierzy typu real oraz string.
 
 ## Instrukcje warunkowe
 <!-- no toc -->#### Możliwości
+Język pozwala na stworzenie instrukcji warunkowych:
+```
+z = 1
+if z == 1 then
+    write z
+    endif
+```
 <!-- no toc -->#### Ograniczenia
-
+Język nie obsługuje instukcji else i elseif znanych z innych języków programowania.
+Operator porównania może porównywać tylko zmienną typu ```Int``` z wartością typu ```Int```
+## Pętle
+<!-- no toc -->#### Możliwości
+Język pozwala na stworzenie pętli. Pętla wykona kod znajdujący się między słowami kluczowymi ```repeat``` i ```endrepeat``` n razy gdzie n to wynik wyrażenia znajdującego się pezpośrednio po słowie kluczowym ```repeat```:
+```
+repeat 3
+    x = x+1
+   write x
+  endrepeat
+```
+<!-- no toc -->#### Ograniczenia
+Język nie pozwala na iterację po objektach ani na znane z innych języków pętle while.
 ## Funkcje
 <!-- no toc -->#### Możliwości
+Język pozwala na stworzenie i wykonanie funkcji:
+```
+function fun
+  x = 1
+  fun = x + 1
+endfunction
+
+
+f = call fun()
+```
+Dodatkowo obsługiwane są zmienne lokalne w funkcjach.
 <!-- no toc -->#### Ograniczenia
+Nie da się wywołać funkcji z parametrami, jedynym sposobem na przekazanie wartości są zmienne globalne.
 
 ## Struktury
 <!-- no toc -->#### Możliwości
+Język pozwala na stworzenie struktór danych:
+```
+struct Person
+    int age
+    real height
+    int id
+endstruct
+
+```
+Dodatkowo można stworzyć instancje struktury i przypisywać wartości jej polom poprzez:
+```
+Person zosia
+
+zosia.age = 12
+zosia.height = 1.20
+zosia.id = 12000012
+```
 <!-- no toc -->#### Ograniczenia
+W języku nie ma operatora przypisania zdefiniowanego dla instancji struktór.
 
 ## Klasy
 <!-- no toc -->#### Możliwości
+W języku można zdefiniować klasy wraz z metodami:
+```
+class Simple
+    int year
+
+    method Init
+        this_year = 2024
+        Init = 0
+    endmethod
+endclass
+```
+W celu odniesienia się do pola klasy wewnątrz metody zdefiniowany został operato ```this_```.
+Język obsłufuje tworzenie instancji klasy a takrze możliwość odnoszenia się do pól klasy i wywoływania metod:
+```
+Simple simpleObject
+simpleObject.year = 12000
+a = call simpleObject.Init()
+write simpleObject.year
+```
 <!-- no toc -->#### Ograniczenia
+W języku nie ma operatora przypisania zdefiniowanego dla instancji klas.
