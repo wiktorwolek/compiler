@@ -2,7 +2,16 @@ grammar Expr;
 
 prog: block;
 
-block: ((statement | function | struct | declStruct)? NEWLINE)*;
+block: (
+		(
+			statement
+			| function
+			| struct
+			| declStruct
+			| class
+			| delcClass
+		)? NEWLINE
+	)*;
 
 statement:
 	write									# write1
@@ -22,13 +31,15 @@ repetitions: expression;
 
 assign: assignableID '=' expression;
 
-assignableID: id | table | structref;
+assignableID: id | table | structref | thisref;
 
 id: ID;
 
-idToken: ID | table | structref;
+idToken: ID | table | structref | thisref;
 
 structref: ID '.' ID;
+
+thisref: 'this_' ID;
 
 assigntable: ID '=' newtable;
 
@@ -51,14 +62,15 @@ expression: expression1 | add | substract;
 expression1: expression2 | multiply | divide;
 
 expression2:
-	INT						# int
-	| REAL					# real
-	| STRING				# string
-	| TOINT expression2		# toint
-	| TOREAL expression2	# toreal
-	| '(' expression ')'	# par
-	| idToken				# ids
-	| CALL ID '(' ')'		# call;
+	INT							# int
+	| REAL						# real
+	| STRING					# string
+	| TOINT expression2			# toint
+	| TOREAL expression2		# toreal
+	| '(' expression ')'		# par
+	| idToken					# ids
+	| CALL ID '(' ')'			# call
+	| CALL ID '.' ID '(' ')'	# methodcall;
 
 table: ID '[' indexes ']' | ID '[' indexes ',' indexes ']';
 
@@ -80,17 +92,31 @@ fblock: ( statement? NEWLINE)*;
 
 struct: STRUCT sname sblock ENDSTRUCT;
 
+class: CLASS sname cblock ENDCLASS;
+
 sname: ID;
 
 sblock: ( declaration? NEWLINE)*;
 
 declaration: declInt | declReal;
 
+cblock: ( classDeclaration? NEWLINE)*;
+
+method: METHOD mparam mblock ENDMETHOD;
+
+mparam: ID;
+
+mblock: ( statement? NEWLINE)*;
+
+classDeclaration: declInt | declReal | method;
+
 declInt: 'int' ID;
 
 declReal: 'real' ID;
 
 declStruct: sname ID;
+
+delcClass: sname ID;
 
 // declString: 'string' INT assignableID;
 
@@ -113,6 +139,14 @@ ENDFUNCTION: 'endfunction';
 STRUCT: 'struct';
 
 ENDSTRUCT: 'endstruct';
+
+CLASS: 'class';
+
+ENDCLASS: 'endclass';
+
+METHOD: 'method';
+
+ENDMETHOD: 'endmethod';
 
 WRITE: 'write';
 

@@ -14,6 +14,7 @@ class VarType(Enum):
     TABLE = 4
     STRING = 5
     STRUCT = 6
+    METHOD = 7
 
 # Define Value namedtuple to represent variables
 Value = namedtuple('Value', ['name', 'type', 'length'])
@@ -162,6 +163,7 @@ class LLVMActions(ExprListener):
         f = open("prog.ll","w")
         f.write(code)
         print(code)
+
     def exitFparam(self,ctx:ExprParser.FparamContext):
         ID = ctx.ID().getText()
         self.functions.append(ID)
@@ -170,12 +172,28 @@ class LLVMActions(ExprListener):
     def enterFblock(self,ctx:ExprParser.FblockContext):
         self.is_global = False
         set_variable(self.function,VarType.INT,self)
-
     def exitFblock(self,ctx:ExprParser.FblockContext):
         if len(list(filter(lambda x: x.name==self.function,self.localnames))) == 0:
           assignValue(set_variable(self.function,VarType.INT,self),Value("0",VarType.INT, 0), self, ctx)
         loadValue(Value("%"+self.function,VarType.INT, 0),self)
         LLVMGenerator.function_end()
+        self.localnames = []
+        self.is_global = True
+
+    def exitMparam(self,ctx:ExprParser.MparamContext):
+        ID = ctx.children[0].symbol.text
+        self.function = ID
+        LLVMGenerator.method_start(ID, self.structName)
+        
+    def enterMblock(self,ctx:ExprParser.MblockContext):
+        self.is_global = False
+
+
+    def exitMblock(self,ctx:ExprParser.MblockContext):
+        if len(list(filter(lambda x: x.name==self.function,self.localnames))) == 0:
+          assignValue(set_variable(self.function,VarType.INT,self),Value("0",VarType.INT, 0), self, ctx)
+        loadValue(Value("%"+self.function,VarType.INT, 0),self)
+        LLVMGenerator.method_end()
         self.localnames = []
         self.is_global = True
 
@@ -199,6 +217,18 @@ class LLVMActions(ExprListener):
         tmpID = LLVMGenerator.get_struct_element("%"+structName, GetV(structName, self, ctx).length, offset)
         self.stack.append(Value(tmpID, value.type, 0))
         
+    def exitThisref(self, ctx:ExprParser.ThisrefContext):
+        #   %4 = getelementptr inbounds %class.Something, %class.Something* %3, i32 0, i32 0
+        fieldName = ctx.children[1].parentCtx.stop.text
+        structItems = self.structures[self.structName]
+        try:
+            value = list(filter(lambda x: x.name==fieldName, structItems))[0]
+            offset = structItems.index(value)
+        except:
+            self.error(ctx.start.line, "undeclared structure field is referenced")
+        tmpID = LLVMGenerator.get_struct_element("%3", self.structName, offset)
+        self.stack.append(Value(tmpID, value.type, 0))
+
 
     def exitDeclInt(self, ctx:ExprParser.DeclIntContext):
         self.structures[self.structName].append(
@@ -208,6 +238,11 @@ class LLVMActions(ExprListener):
     def exitDeclReal(self, ctx:ExprParser.DeclRealContext):
         self.structures[self.structName].append(
             Value(ctx.ID().getText(), VarType.REAL, 0)
+            )
+
+    def exitMethod(self, ctx:ExprParser.MethodContext):
+        self.structures[self.structName].append(
+            Value(ctx.children[1].children[0].symbol.text, VarType.METHOD, 0)
             )
 
     def exitSblock(self, ctx:ExprParser.SblockContext):
@@ -222,8 +257,23 @@ class LLVMActions(ExprListener):
 
         LLVMGenerator.create_struct(self.structName, self, self.is_global, structTypeList)
 
+    def exitCblock(self, ctx:ExprParser.CblockContext):
+        itemTypeNames = []
+        for item in self.structures[self.structName]:
+            if item.type == VarType.INT:
+                itemTypeNames.append('i32')
+            elif item.type == VarType.REAL:
+                itemTypeNames.append('double')
+
+        structTypeList = ', '.join(itemTypeNames)
+
+        LLVMGenerator.create_struct(self.structName, self, self.is_global, structTypeList)
 
     def enterStruct(self, ctx:ExprParser.StructContext):
+        self.structName = ctx.children[1].children[0].symbol.text
+        self.structures.update({self.structName : []})
+
+    def enterClass(self, ctx:ExprParser.ClassContext):
         self.structName = ctx.children[1].children[0].symbol.text
         self.structures.update({self.structName : []})
 
@@ -324,6 +374,15 @@ class LLVMActions(ExprListener):
     def exitCall(self,ctx:ExprParser.CallContext):
         LLVMGenerator.call(ctx.ID().getText())
         self.stack.append(Value('%'+str(LLVMGenerator.tmp-1),VarType.INT, 0))
+
+    def exitMethodcall(self, ctx:ExprParser.MethodcallContext):
+        objectName = ctx.children[1].symbol.text
+        methodName = ctx.children[3].symbol.text
+        className = GetV(objectName, self, ctx).length
+        
+        LLVMGenerator.call(className+"0"+methodName, "%struct."+className+"* noundef nonnull align 8 dereferenceable(16) %"+objectName+"")
+        self.stack.append(Value('%'+str(LLVMGenerator.tmp-1),VarType.INT, 0))
+
 
     def exitReadInt(self, ctx:ExprParser.ReadIntContext):
         ID = ctx.ID().getText()

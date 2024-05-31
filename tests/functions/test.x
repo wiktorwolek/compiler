@@ -14,4 +14,6 @@ function second
     second = 0
 endfunction
 
-call first()
+
+a = call first()
+b = call second()
