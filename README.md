@@ -100,7 +100,7 @@ repeat 3
   endrepeat
 ```
 <!-- no toc -->#### Ograniczenia
-Język nie pozwala na iterację po objektach ani na znane z innych języków pętle while.
+Język nie pozwala na iterację po obiektach ani na znane z innych języków pętle, np.: while.
 ## Funkcje
 <!-- no toc -->#### Możliwości
 Język pozwala na stworzenie i wykonanie funkcji:
@@ -119,7 +119,7 @@ Nie da się wywołać funkcji z parametrami, jedynym sposobem na przekazanie war
 
 ## Struktury
 <!-- no toc -->#### Możliwości
-Język pozwala na stworzenie struktór danych:
+Język pozwala na stworzenie struktur danych:
 ```
 struct Person
     int age
@@ -137,7 +137,8 @@ zosia.height = 1.20
 zosia.id = 12000012
 ```
 <!-- no toc -->#### Ograniczenia
-W języku nie ma operatora przypisania zdefiniowanego dla instancji struktór.
+W języku nie ma operatora przypisania zdefiniowanego dla instancji struktur.
+Pola struktury mogą być typu ```int``` lub ```real```.
 
 ## Klasy
 <!-- no toc -->#### Możliwości
@@ -152,8 +153,8 @@ class Simple
     endmethod
 endclass
 ```
-W celu odniesienia się do pola klasy wewnątrz metody zdefiniowany został operato ```this_```.
-Język obsłufuje tworzenie instancji klasy a takrze możliwość odnoszenia się do pól klasy i wywoływania metod:
+W celu odniesienia się do pola klasy wewnątrz metody zdefiniowany został operator ```this_```.
+Język obsługuje tworzenie instancji klasy oraz umożliwia odnoszenie się do pól klasy i wywoływanie metod:
 ```
 Simple simpleObject
 simpleObject.year = 12000
@@ -162,3 +163,4 @@ write simpleObject.year
 ```
 <!-- no toc -->#### Ograniczenia
 W języku nie ma operatora przypisania zdefiniowanego dla instancji klas.
+Podobnie jak w przypadku struktur, obsługiwane są tylko pola typu ```int``` i ```real```.
