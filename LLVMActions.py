@@ -97,6 +97,7 @@ def LoadOrCall(ID, object,ctx):
     return id
 
 def GetV(ID, object,ctx):
+    v = None
     if  len(list(filter(lambda x: x.name==ID,object.localnames))) > 0:
         v = list(filter(lambda x: x.name==ID,object.localnames))[0]
         id = "%"+v.name
@@ -106,7 +107,10 @@ def GetV(ID, object,ctx):
     elif len(list(filter(lambda x: x==ID,object.functions))) > 0:
         id = ID
     else:
-        LLVMActions.error(ctx.start.line,"Unknown "+ID+ ": local > global > function")
+        print("Error, line " + str(ctx.start.line) + ", " + "Unknown "+ID+ ": local > global > function")
+        msg = "Error, line " + str(ctx.start.line) + ", " + "Unknown "+ID+ ": local > global > function"
+        LLVMActions.error(ctx.start.line, msg)
+        # LLVMActions.error(ctx.start.line, "Unknown "+ID+ ": local > global > function")    
     return v
 
 class LLVMActions(ExprListener):
@@ -477,5 +481,7 @@ class LLVMActions(ExprListener):
         v  = set_variable(ID,VarType.INT,self)
         LLVMGenerator.icmp(v,INT.name)
     def error(self, line, msg):
-        print("Error, line " + str(line) + ", " + msg)
+
+        print("Error, line " + str(line) + ", " + str(msg))
+        raise Exception("Error occured")
         exit(1)

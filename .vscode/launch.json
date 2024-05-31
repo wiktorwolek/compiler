@@ -75,6 +75,14 @@
             "program": "compiler.py",
             "console": "integratedTerminal",
             "args": "tests/class.x"
+        },
+        {
+            "name": "Python: scope",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "compiler.py",
+            "console": "integratedTerminal",
+            "args": "tests/tables/local_table_int.x"
         }
     ]
 }

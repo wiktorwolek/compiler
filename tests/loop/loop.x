@@ -3,6 +3,6 @@ a = 4
 repeat 2
   repeat a 
     x = x+1
-   write x
+    write x
   endrepeat
 endrepeat
